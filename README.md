@@ -1,22 +1,28 @@
-# Rogue 5.4.5x Japanese and WASM patch
+English | [Japanese](README_ja.md)
 
-## これは何？
+# Rogue 5.4.5x Japanese and WASM Patch
+
+## What is this?
 
 [Play demo](https://mawxiwtz.github.io/rogue5/)
 
-このプロジェクトは、[Rogue 5.4.5x](http://yozvox.web.fc2.com/526F677565.html#rogue54) について以下を行うためのパッチを作成・配布しています。
+This project provides and distributes patches for [Rogue 5.4.5x](http://yozvox.web.fc2.com/526F677565.html#rogue54) to achieve the following:
 
-- メッセージや文字入力の日本語(UTF-8)対応
-- ブラウザで遊ぶためのWASM対応
+- Support for Japanese (UTF-8) messages and text input
+- WebAssembly (WASM) support to play in a browser
 
-Rogue 5.4.5xは、[Rogue 5.4.4](http://rogue.rogueforge.net/rogue-5-4/) をベースに Y.Oz Vox さんが調整を行ったものです。
-メッセージの日本語化にあたっては、[jRogue for macOS (日本語版 Rogue 5.4)](https://github.com/leopard-gecko/homebrew-game) のメッセージを参考にさせていただきました。メッセージは環境変数 LANG によって日本語/英語を切り替えて表示します。対応している日本語のエンコーディングは UTF-8 のみとなります。ただし必要最低限な対応にとどめているため UTF-8 のサロゲートペア文字や NFD (Normalization Form Canonical Decomposition)、Zero Width には対応していません。個人の趣味で作成した非公式なパッチのため、もしかするとオリジナルにはない不具合が出る可能性があります。
+Rogue 5.4.5x is an adjusted version of [Rogue 5.4.4](http://rogue.rogueforge.net/rogue-5-4/) by Y.Oz Vox.  
+Japanese message translations were referenced from [jRogue for macOS (Japanese version Rogue 5.4)](https://github.com/leopard-gecko/homebrew-game).  
+Messages switch between Japanese and English depending on the `LANG` environment variable.  
+The only supported Japanese encoding is UTF-8. However, the support is minimal: surrogate pairs, NFD (Normalization Form Canonical Decomposition), and zero-width characters are not supported.  
+This is an unofficial patch created as a personal hobby, so it may contain bugs not found in the original version.
 
-また、Web ブラウザで Rogue を動かすための WASM ファイルを Emscripten でビルドするためのパッチも配布しています。ビルドした WASM ファイルを xterm.js や xterm-pty と組み合わせることでブラウザで遊ぶことが可能となります。
+Additionally, a patch is provided to build a WASM file using Emscripten to run Rogue in a web browser.  
+By combining the built WASM file with xterm.js or xterm-pty, you can play Rogue in your browser.
 
-## 使い方
+## Usage
 
-Node.js がインストールされていれば、以下でローカルでも遊ぶことができます。
+If you have Node.js installed, you can play locally as follows:
 
 ```bash
 git clone https://github.com/mawxiwtz/rogue5
@@ -25,15 +31,16 @@ npm install
 npm run start
 ```
 
-[http://localhost:3000/](http://localhost:3000/) にブラウザでアクセスしてください。
+Access [http://localhost:3000/](http://localhost:3000/) in your browser.
 
-## 日本語対応版 Rogue のビルド
+## Building the Japanese-Compatible Rogue
 
-メッセージを日本語化します。環境変数 LANG をたとえば ja_JP.UTF-8 にすると日本語で表示されます。
-en_USやCなど他のものにすると英語で表示されます。
-ビルド、動作確認は、Linux でのみ行っています。Windows や Mac OS X では未確認です。確認できしだい更新予定です。
+This patch translates in-game messages into Japanese.  
+Set the `LANG` environment variable to something like `ja_JP.UTF-8` to display Japanese.  
+Use `en_US` or `C` to display English.  
+Build and runtime tests have only been conducted on Linux. Windows and macOS are untested. Updates will be provided once verified.
 
-1. [Rogue 5.4.5x のソース](http://yozvox.web.fc2.com/rogue5.4.5x-src.zip)をダウンロードし、展開します。
+1. Download and extract the [Rogue 5.4.5x source](http://yozvox.web.fc2.com/rogue5.4.5x-src.zip):
 
 ```bash
 curl -OL http://yozvox.web.fc2.com/rogue5.4.5x-src.zip
@@ -41,7 +48,7 @@ unzip rogue5.4.5x-src.zip
 cd rogue5.4.5x-src
 ```
 
-2. 日本語対応パッチを当ててビルドします。configure のオプションは自分の環境に合わせて適宜変更してください。
+2. Apply the Japanese support patch and build. Modify `configure` options as needed for your environment.
 
 ```bash
 patch -p1 < ../rogue5.4.5x_ja.patch
@@ -50,30 +57,30 @@ chmod +x configure
 make
 ```
 
-3. 実行します。
+3. Run the game:
 
 ```bash
-おすすめ
+Recommended:
 ./rogue5 -24
 
-英語版で遊びたい時
-LANG=en_US ./rogue5 -24
+To play in Japanese:
+LANG=ja_JP.UTF-8 ./rogue5 -24
 ```
 
-遊び方やオプションの説明は以下を参考にしてください。
+For gameplay instructions and options, refer to:
 
-- [運命の洞窟へのガイド](http://yozvox.web.fc2.com/rogue54_jp.html)
+- [Guide to the Dungeons of Doom](http://yozvox.web.fc2.com/rogue54_jp.html)
 - [History](http://yozvox.web.fc2.com/HistoryOfRogue.txt)
 
-"-24" オプションの意味は Rogue 5.4.5x のソースコードに含まれる README.txt の一番最後を参照してください。
+The meaning of the `-24` option can be found at the end of `README.txt` included in the Rogue 5.4.5x source code.
 
-## 日本語 + WASM (Emscripten) 対応版 Rogue のビルド
+## Building the Japanese + WASM (Emscripten) Version of Rogue
 
-こちらは日本語対応に加えて、Web ブラウザで動かす Rogue を作成するための方法です。
+This section describes how to create a Japanese-compatible version of Rogue that runs in a web browser.
 
-### 事前準備
+### Prerequisites
 
-まず、[Emscripten](https://emscripten.org/) および [Emscripten対応版 Ncurses-6.5](build_ncurses.md) を用意します。以下のとおり emcc が実行可能であることを確認します。
+First, prepare [Emscripten](https://emscripten.org/) and [Emscripten-compatible Ncurses-6.5](build_ncurses.md). Confirm that `emcc` is executable:
 
 ```bash
 $ emcc --version
@@ -83,14 +90,14 @@ This is free and open source software under the MIT license.
 There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
 
-次に、以下のファイルも必要なためダウンロードしておきます。
+Then, download the following necessary files:
 
-- [emscripten-pty.js](https://github.com/mame/xterm-pty/raw/refs/heads/main/emscripten-pty.js) \
-  [xterm-pty](https://github.com/mame/xterm-pty) が配布している、WASM 版 Rogue の画面を xterm.js で表示したり、キー入力を渡したりするために必要なスクリプトです。
-- xterm-256color \
-  [ncurses-6.5.tar.gz](https://invisible-island.net/archives/ncurses/ncurses-6.5.tar.gz) をビルドすると生成される。OS の /usr/share/terminfo/x/ 配下にあるものでもいいかもしれない。
-- pre.js \
-  以下の内容で自分で作成しておきます。
+- [emscripten-pty.js](https://github.com/mame/xterm-pty/raw/refs/heads/main/emscripten-pty.js)  
+  A script from [xterm-pty](https://github.com/mame/xterm-pty), required to display the WASM Rogue screen using xterm.js and handle key input.
+- xterm-256color  
+  This is generated by building [ncurses-6.5.tar.gz](https://invisible-island.net/archives/ncurses/ncurses-6.5.tar.gz). Alternatively, you may use the one under your OS's `/usr/share/terminfo/x/`.
+- pre.js  
+  Create this file yourself with the following contents:
 
 ```javascript
 Module['preRun'] = [
@@ -112,9 +119,9 @@ Module['preRun'] = [
 ];
 ```
 
-### ビルド
+### Build
 
-Rogue 5.4.5x のソースをダウンロードして展開します。
+Download and extract the Rogue 5.4.5x source:
 
 ```bash
 curl -OL http://yozvox.web.fc2.com/rogue5.4.5x-src.zip
@@ -122,20 +129,20 @@ unzip rogue5.4.5x-src.zip
 cd rogue5.4.5x-src
 ```
 
-日本語対応と WASM 対応のためのパッチを当てます。
+Apply the patches for Japanese and WASM support:
 
 ```bash
 patch -p1 < ../rogue5.4.5x_ja.patch
 patch -p1 < ../rogue5.4.5x_emscripten.patch
 ```
 
-環境変数 NCURSESDIR に、Emscripten がリンクするための [Ncurses ライブラリ](build_ncurses.md)へのパスを設定します。
+Set the `NCURSESDIR` environment variable to the path of the [Ncurses library](build_ncurses.md) used for Emscripten linking:
 
 ```bash
 export NCURSESDIR=xxxxxxx
 ```
 
-emconfigure を実行します。
+Run `emconfigure`:
 
 ```bash
 chmod +x configure
@@ -148,14 +155,15 @@ emconfigure ./configure \
   --with-pre-js=../pre.js
 ```
 
-ビルドします。
+Build the project:
 
 ```bash
 emmake make
 ```
 
-rogue5.mjs と rogue5.wasm が作成されれば成功です。\
-以下のような HTML を index.html という名前で用意し、lib ディレクトリ配下に rogue5.mjs、rogue5.wasm、rogue.ttl (Rogue 5.4.5x のソースに含まれています)、xterm-256color を配置します。Webサーバを起動し、index.html にアクセスすると Rogue の画面が表示されます。なお、ローカルで index.html を開いても動作しません。
+If `rogue5.mjs` and `rogue5.wasm` are created, the build was successful.  
+Create an `index.html` file like the following and place it with `rogue5.mjs`, `rogue5.wasm`, `rogue.ttl` (included in the Rogue 5.4.5x source), and `xterm-256color` in a `lib` directory.  
+Start a web server and access `index.html`. Note: opening it locally in a browser will not work.
 
 ```html
 <!doctype html>
@@ -251,15 +259,15 @@ rogue5.mjs と rogue5.wasm が作成されれば成功です。\
 </html>
 ```
 
-##　おまけ
+## Extras
 
-自分はモンスター名や武器名を自分好みにしたいため以下のパッチもあてました。これは好みですのであてなくても構いません。
+I personally prefer customizing monster and weapon names, so I also applied the following patch. This is optional.
 
 ```bash
 patch -p1 < ../rogue5.4.5x_ja_rename.patch
 ```
 
-環境によっては、Ctrl+H による移動がうまく効かない場合があリます。その時は次のパッチをあててください。
+In some environments, Ctrl+H movement may not work properly. In that case, apply the following patch:
 
 ```bash
 patch -p1 < ../rogue5.4.5x_ctrl-h.patch
