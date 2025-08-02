@@ -1,0 +1,32 @@
+{
+  "name": "rogueclone2s-wasm",
+  "version": "0.1.0",
+  "description": "Rogue Clone 2s UTF-8 and WASM version",
+  "author": "mawxiwtz",
+  "keywords": [
+    "rogue",
+    "rpg",
+    "wasm"
+  ],
+  "main": "dist/lib/rogue.mjs",
+  "module": "dist/lib/rogue.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@xterm/xterm": "^5.5.0",
+    "xterm-pty": "^0.11.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/node": "^24.0.13",
+    "@xterm/addon-fit": "^0.10.0",
+    "esbuild-plugin-umd-wrapper": "^3.0.0",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0"
+  }
+}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="./lib/rogue.png" type="image/png" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.min.css" />
+    </head>
+
+    <body>
+        <div id="container">
+            <h1>Rogue 5.4.5x WASM</h1>
+            <div id="terminal"></div>
+            <div class="info">
+                <img
+                    src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg"
+                    alt="GitHub Logo"
+                    width="32"
+                    height="32" />
+                <a href="https://github.com/mawxiwtz/rogue5">https://github.com/mawxiwtz/rogue5</a>
+            </div>
+        </div>
+        <script type="module">
+            import { Terminal } from 'https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/+esm';
+            import { FitAddon } from 'https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/+esm';
+            import { openpty } from 'https://cdn.jsdelivr.net/npm/xterm-pty@0.11.1/+esm';
+            import initEmscripten from './lib/rogue5.mjs';
+
+            const xterm = new Terminal({
+                cols: 80,
+                rows: 24,
+                fontSize: 14,
+            });
+            xterm.open(document.getElementById('terminal'));
+
+            const fitAddon = new FitAddon();
+            xterm.loadAddon(fitAddon);
+
+            const { master, slave } = openpty();
+
+            xterm.loadAddon(master);
+            xterm.focus();
+
+            await initEmscripten({
+                pty: slave,
+                arguments: ['-24'],
+            });
+        </script>
+        <style>
+            body {
+                color: white;
+                margin: 0px 0px;
+                background-color: #202020;
+            }
+            a {
+                text-decoration: none;
+            }
+            a:link {
+                color: #e0e0e0;
+            }
+            a:hover {
+                color: #f0f0ff;
+            }
+            a:visited {
+                color: #f0f0e0;
+            }
+            div#container {
+                width: 100vw;
+                margin: 32px auto;
+            }
+            div.info {
+                margin: 32px auto;
+                text-align: center;
+            }
+            div.info > img {
+                filter: invert(100%);
+            }
+            h1 {
+                margin: 16px auto;
+                text-align: center;
+            }
+            div#terminal {
+                width: 42em;
+                margin: 0px auto;
+            }
+        </style>
+    </body>
+</html>

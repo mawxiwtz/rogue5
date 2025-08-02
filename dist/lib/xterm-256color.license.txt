@@ -1,0 +1,7 @@
+
+xterm-256color
+
+xterm-256color is included in the ncurses 6.3 distribution. For information about
+its license, please visit the official ncurses distribution website at:
+
+    https://invisible-island.net/ncurses/
