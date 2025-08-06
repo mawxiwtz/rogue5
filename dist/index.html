@@ -30,7 +30,7 @@
             const xterm = new Terminal({
                 cols: 80,
                 rows: 24,
-                fontSize: 14,
+                fontSize: 16,
             });
             xterm.open(document.getElementById('terminal'));
 
@@ -40,6 +40,7 @@
             const { master, slave } = openpty();
 
             xterm.loadAddon(master);
+
             xterm.focus();
 
             await initEmscripten({
@@ -81,8 +82,11 @@
                 text-align: center;
             }
             div#terminal {
-                width: 42em;
+                width: fit-content;
                 margin: 0px auto;
+            }
+            .xterm-viewport {
+                scrollbar-width: none; /* Firefox */
             }
         </style>
     </body>

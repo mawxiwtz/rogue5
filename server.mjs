@@ -15,7 +15,7 @@ http.createServer(function (request, response) {
     response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
 
     const filePath0 = path.join(basedir, request.url);
-    const filePath = filePath0.endsWith('/') ? filePath0 + 'index.html' : filePath0;
+    const filePath = filePath0.endsWith(path.sep) ? filePath0 + 'index.html' : filePath0;
 
     var extname = String(path.extname(filePath)).toLowerCase();
     var mimeTypes = {
