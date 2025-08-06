@@ -1,7 +1,7 @@
 {
-  "name": "rogueclone2s-wasm",
+  "name": "rogue5",
   "version": "0.1.0",
-  "description": "Rogue Clone 2s UTF-8 and WASM version",
+  "description": "Rogue 5.4.5x WASM version",
   "author": "mawxiwtz",
   "keywords": [
     "rogue",
