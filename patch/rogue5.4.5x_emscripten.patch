@@ -1,6 +1,7 @@
-diff -Naur rogue5.4.5x-src.orig/Makefile.in rogue5.4.5x-src/Makefile.in
---- rogue5.4.5x-src.orig/Makefile.in	2025-08-02 15:37:21.422631435 +0900
-+++ rogue5.4.5x-src/Makefile.in	2025-08-02 15:07:05.355672671 +0900
+diff --git a/Makefile.in b/Makefile.in
+index 21cbfa3..13f8717 100644
+--- a/Makefile.in
++++ b/Makefile.in
 @@ -19,6 +19,7 @@
  DISTNAME=@PACKAGE_TARNAME@@PACKAGE_VERSION@
  PACKAGE_TARNAME = @PACKAGE_TARNAME@-@PACKAGE_VERSION@
@@ -9,7 +10,7 @@ diff -Naur rogue5.4.5x-src.orig/Makefile.in rogue5.4.5x-src/Makefile.in
  
  O=o
  
-@@ -27,6 +28,7 @@
+@@ -27,6 +28,7 @@ CC    = @CC@
  
  #CFLAGS=-O2
  CFLAGS= @CFLAGS@
@@ -17,7 +18,7 @@ diff -Naur rogue5.4.5x-src.orig/Makefile.in rogue5.4.5x-src/Makefile.in
  
  #LIBS=-lcurses
  LIBS =	@LIBS@
-@@ -127,24 +129,28 @@
+@@ -127,24 +129,28 @@ AFILES   = configure Makefile.in configure.ac config.h.in config.sub config.gues
  MISC     = Makefile.std LICENSE.TXT rogue54.sln rogue54.vcproj rogue.spec \
  	   rogue.png rogue.desktop
  
@@ -53,7 +54,7 @@ diff -Naur rogue5.4.5x-src.orig/Makefile.in rogue5.4.5x-src/Makefile.in
  
  maintainer-clean:
  	$(RM) config.h
-@@ -196,11 +202,11 @@
+@@ -196,11 +202,11 @@ $(PROGRAM).cat@DOCS_NROFF@: rogue.6
  $(PROGRAM).cat@DOCS_NONE@: rogue.6
  	@echo "Not building" $(PROGRAM).cat
  
@@ -68,10 +69,11 @@ diff -Naur rogue5.4.5x-src.orig/Makefile.in rogue5.4.5x-src/Makefile.in
  	-$(TOUCH) test
  	-if test ! -f $(DESTDIR)$(SCOREFILE) ; then $(INSTALL) -m 0664 test $(DESTDIR)$(SCOREFILE) ; fi
  	-if test "x$(LOGFILE)" != "x" && test ! -f $(DESTDIR)$(LOGFILE) ; then \
-diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
---- rogue5.4.5x-src.orig/acinclude.m4	2013-09-10 21:42:22.000000000 +0900
-+++ rogue5.4.5x-src/acinclude.m4	2025-08-02 15:32:47.689362107 +0900
-@@ -6,10 +6,10 @@
+diff --git a/acinclude.m4 b/acinclude.m4
+index 76a6fdd..009d08d 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -6,10 +6,10 @@ AC_DEFUN([MP_WITH_CURSES],
     then
       AC_CACHE_CHECK([for working curses], mp_cv_curses,
         [LIBS="$LIBS -lcurses"
@@ -86,10 +88,11 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
       if test "$mp_cv_curses" = yes
       then
         AC_DEFINE(HAVE_CURSES_H, 1, [Define to 1 if libcurses is requested])
-@@ -19,12 +19,26 @@
+@@ -18,13 +18,27 @@ AC_DEFUN([MP_WITH_CURSES],
+      fi
     fi
     if test ! "$CURSES_LIB"
-    then
++   then
 +     AC_CACHE_CHECK([for working ncursesw], mp_cv_ncursesw,
 +       [LIBS="$mp_save_LIBS -lncursesw"
 +        AC_LINK_IFELSE([AC_LANG_PROGRAM(
@@ -103,7 +106,7 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
 +     fi
 +   fi
 +   if test ! "$CURSES_LIB"
-+   then
+    then
       AC_CACHE_CHECK([for working ncurses], mp_cv_ncurses,
         [LIBS="$mp_save_LIBS -lncurses"
 -        AC_TRY_LINK(
@@ -117,7 +120,7 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
       if test "$mp_cv_ncurses" = yes
       then
         AC_DEFINE(HAVE_NCURSES_H, 1, [Define to 1 if libncurses is requested])
-@@ -35,10 +49,10 @@
+@@ -35,10 +49,10 @@ AC_DEFUN([MP_WITH_CURSES],
     then
       AC_CACHE_CHECK([for working pdcurses], mp_cv_pdcurses,
         [LIBS="$mp_save_LIBS -lpdcurses"
@@ -132,7 +135,7 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
       if test "$mp_cv_pdcurses" = yes
       then
         AC_DEFINE(HAVE_CURSES_H, 1, [Define to 1 if libcurses is requested])
-@@ -49,10 +63,10 @@
+@@ -49,10 +63,10 @@ AC_DEFUN([MP_WITH_CURSES],
     then
       AC_CACHE_CHECK([for working pdcur], mp_cv_pdcur,
         [LIBS="$mp_save_LIBS -lpdcur"
@@ -147,7 +150,7 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
       if test "$mp_cv_pdcur" = yes
       then
         AC_DEFINE(HAVE_CURSES_H, 1, [Define to 1 if libcurses is requested])
-@@ -63,10 +77,10 @@
+@@ -63,10 +77,10 @@ AC_DEFUN([MP_WITH_CURSES],
     then
       AC_CACHE_CHECK([for working peer pdcurses], mp_cv_lpdcurses,
         [LIBS="$mp_save_LIBS ../pdcurses/pdcurses.a"
@@ -162,7 +165,7 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
       if test "$mp_cv_lpdcurses" = yes
       then
         AC_DEFINE(HAVE_CURSES_H, 1, [Define to 1 if libcurses is requested])
-@@ -76,12 +90,12 @@
+@@ -76,12 +90,12 @@ AC_DEFUN([MP_WITH_CURSES],
     fi
     AC_CACHE_CHECK([for ESCDELAY variable],
  		   [mc_cv_ncurses_escdelay],
@@ -179,7 +182,7 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
      ])
      if test "$mc_cv_ncurses_escdelay" = yes; then
  	AC_DEFINE(HAVE_ESCDELAY, 1,
-@@ -120,3 +134,64 @@
+@@ -120,3 +134,64 @@ AC_DEFUN([RF_ADDTO],[
  ])dnl
  
  
@@ -244,9 +247,10 @@ diff -Naur rogue5.4.5x-src.orig/acinclude.m4 rogue5.4.5x-src/acinclude.m4
 +  fi
 +])dnl
 +
-diff -Naur rogue5.4.5x-src.orig/aclocal.m4 rogue5.4.5x-src/aclocal.m4
---- rogue5.4.5x-src.orig/aclocal.m4	2021-03-25 09:03:24.000000000 +0900
-+++ rogue5.4.5x-src/aclocal.m4	2025-08-02 15:38:06.655502149 +0900
+diff --git a/aclocal.m4 b/aclocal.m4
+index 833c6a5..3c637c4 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
 @@ -1,6 +1,6 @@
 -# generated automatically by aclocal 1.16.2 -*- Autoconf -*-
 +# generated automatically by aclocal 1.18.1 -*- Autoconf -*-
@@ -256,10 +260,11 @@ diff -Naur rogue5.4.5x-src.orig/aclocal.m4 rogue5.4.5x-src/aclocal.m4
  
  # This file is free software; the Free Software Foundation
  # gives unlimited permission to copy and/or distribute it,
-diff -Naur rogue5.4.5x-src.orig/chase.c rogue5.4.5x-src/chase.c
---- rogue5.4.5x-src.orig/chase.c	2025-08-02 15:37:21.422631435 +0900
-+++ rogue5.4.5x-src/chase.c	2025-08-02 15:38:06.655502149 +0900
-@@ -23,7 +23,7 @@
+diff --git a/chase.c b/chase.c
+index 87ec8a0..4faaea5 100644
+--- a/chase.c
++++ b/chase.c
+@@ -23,7 +23,7 @@ static coord ch_ret;				/* Where chasing takes you */
   *	Make all the running monsters move.
   */
  void
@@ -268,10 +273,28 @@ diff -Naur rogue5.4.5x-src.orig/chase.c rogue5.4.5x-src/chase.c
  {
      THING *tp;
      THING *next;
-diff -Naur rogue5.4.5x-src.orig/command.c rogue5.4.5x-src/command.c
---- rogue5.4.5x-src.orig/command.c	2025-08-02 15:37:21.426631512 +0900
-+++ rogue5.4.5x-src/command.c	2025-08-02 15:38:06.659502226 +0900
-@@ -73,10 +73,12 @@
+diff --git a/command.c b/command.c
+index f058879..94262ac 100644
+--- a/command.c
++++ b/command.c
+@@ -23,12 +23,16 @@ int first_time = 1;
+ void
+ msleep(long msec)
+ {
++#if defined(__EMSCRIPTEN__)
++    emscripten_sleep(msec);             
++#else
+     struct timespec ts;
+ 
+     ts.tv_sec  = 0;			/* 0 sec */
+     ts.tv_nsec = msec * 1000000L;	/*     1,000,000 nano sec = 0.001 sec */
+ 					/* 1,000,000,000 nano sec = 1.000 sec */
+     nanosleep(&ts, NULL);
++#endif
+ }
+ 
+ int
+@@ -73,10 +77,12 @@ command(void)
      FILE *fptr;
  
      if (rname && first_time)
@@ -284,9 +307,10 @@ diff -Naur rogue5.4.5x-src.orig/command.c rogue5.4.5x-src/command.c
      first_time = 0;
      if (on(player, ISHASTE))
  	ntimes++;
-diff -Naur rogue5.4.5x-src.orig/config.h.in rogue5.4.5x-src/config.h.in
---- rogue5.4.5x-src.orig/config.h.in	2025-08-02 15:37:21.426631512 +0900
-+++ rogue5.4.5x-src/config.h.in	2025-08-02 15:38:06.659502226 +0900
+diff --git a/config.h.in b/config.h.in
+index ee42e15..0d261b4 100644
+--- a/config.h.in
++++ b/config.h.in
 @@ -6,10 +6,13 @@
  /* Define if checktime feature should be enabled */
  #undef CHECKTIME
@@ -544,9 +568,10 @@ diff -Naur rogue5.4.5x-src.orig/config.h.in rogue5.4.5x-src/config.h.in
 -/* Define as `fork' if `vfork' does not work. */
 +/* Define as 'fork' if 'vfork' does not work. */
  #undef vfork
-diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
---- rogue5.4.5x-src.orig/configure	2025-08-02 15:37:21.434631666 +0900
-+++ rogue5.4.5x-src/configure	2025-08-02 15:38:34.912046074 +0900
+diff --git a/configure b/configure
+index 114d2b1..bb24ef6 100644
+--- a/configure
++++ b/configure
 @@ -1,11 +1,11 @@
  #! /bin/sh
  # Guess values for system-dependent variables and create Makefiles.
@@ -569,7 +594,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  if test ${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
  then :
    emulate sh
-@@ -26,12 +25,13 @@
+@@ -26,12 +25,13 @@ then :
    # is contrary to our usage.  Disable this feature.
    alias -g '${1+"$@"}'='"$@"'
    setopt NO_GLOB_SUBST
@@ -585,7 +610,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  esac
  fi
  
-@@ -103,7 +103,7 @@
+@@ -103,7 +103,7 @@ IFS=$as_save_IFS
  
       ;;
  esac
@@ -594,7 +619,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # in which case we are not to be found in the path.
  if test "x$as_myself" = x; then
    as_myself=$0
-@@ -133,15 +133,14 @@
+@@ -133,15 +133,14 @@ case $- in # ((((
  esac
  exec $CONFIG_SHELL $as_opts "$as_myself" ${1+"$@"}
  # Admittedly, this is quite paranoid, since all the known shells bail
@@ -612,7 +637,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  then :
    emulate sh
    NULLCMD=:
-@@ -149,12 +148,13 @@
+@@ -149,12 +148,13 @@ then :
    # is contrary to our usage.  Disable this feature.
    alias -g '\${1+\"\$@\"}'='\"\$@\"'
    setopt NO_GLOB_SUBST
@@ -628,7 +653,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  esac
  fi
  "
-@@ -172,8 +172,9 @@
+@@ -172,8 +172,9 @@ as_fn_ret_failure && { exitcode=1; echo as_fn_ret_failure succeeded.; }
  if ( set x; as_fn_ret_success y && test x = \"\$1\" )
  then :
  
@@ -640,7 +665,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  test x\$exitcode = x0 || exit 1
  blah=\$(echo \$(echo blah))
-@@ -187,14 +188,15 @@
+@@ -187,14 +188,15 @@ test \$(( 1 + 1 )) = 2 || exit 1"
    if (eval "$as_required") 2>/dev/null
  then :
    as_have_required=yes
@@ -660,7 +685,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  as_found=false
  for as_dir in /bin$PATH_SEPARATOR/usr/bin$PATH_SEPARATOR$PATH
  do
-@@ -227,12 +229,13 @@
+@@ -227,12 +229,13 @@ IFS=$as_save_IFS
  if $as_found
  then :
  
@@ -677,7 +702,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  
-@@ -254,7 +257,7 @@
+@@ -254,7 +257,7 @@ case $- in # ((((
  esac
  exec $CONFIG_SHELL $as_opts "$as_myself" ${1+"$@"}
  # Admittedly, this is quite paranoid, since all the known shells bail
@@ -686,7 +711,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  printf "%s\n" "$0: could not re-execute with $CONFIG_SHELL" >&2
  exit 255
  fi
-@@ -274,7 +277,8 @@
+@@ -274,7 +277,8 @@ $0: a modern shell, or manually run the script under such a
  $0: shell if you do have one."
    fi
    exit 1
@@ -696,7 +721,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  fi
  SHELL=${CONFIG_SHELL-/bin/sh}
-@@ -313,14 +317,6 @@
+@@ -313,14 +317,6 @@ as_fn_exit ()
    as_fn_set_status $1
    exit $1
  } # as_fn_exit
@@ -711,7 +736,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  # as_fn_mkdir_p
  # -------------
-@@ -389,11 +385,12 @@
+@@ -389,11 +385,12 @@ then :
    {
      eval $1+=\$2
    }'
@@ -727,7 +752,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi # as_fn_append
  
  # as_fn_arith ARG...
-@@ -407,21 +404,14 @@
+@@ -407,21 +404,14 @@ then :
    {
      as_val=$(( $* ))
    }'
@@ -753,7 +778,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  # as_fn_error STATUS ERROR [LINENO LOG_FD]
  # ----------------------------------------
-@@ -495,6 +485,8 @@
+@@ -495,6 +485,8 @@ as_cr_alnum=$as_cr_Letters$as_cr_digits
      /[$]LINENO/=
    ' <$as_myself |
      sed '
@@ -762,7 +787,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
        s/[$]LINENO.*/&-/
        t lineno
        b
-@@ -543,7 +535,6 @@
+@@ -543,7 +535,6 @@ esac
  as_echo='printf %s\n'
  as_echo_n='printf %s'
  
@@ -770,7 +795,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  rm -f conf$$ conf$$.exe conf$$.file
  if test -d conf$$.dir; then
    rm -f conf$$.dir/conf$$.file
-@@ -555,9 +546,9 @@
+@@ -555,9 +546,9 @@ if (echo >conf$$.file) 2>/dev/null; then
    if ln -s conf$$.file conf$$ 2>/dev/null; then
      as_ln_s='ln -s'
      # ... but there are two gotchas:
@@ -783,7 +808,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ln -s conf$$.file conf$$.dir 2>/dev/null && test ! -f conf$$.exe ||
        as_ln_s='cp -pR'
    elif ln conf$$.file conf$$ 2>/dev/null; then
-@@ -582,10 +573,12 @@
+@@ -582,10 +573,12 @@ as_test_x='test -x'
  as_executable_p=as_fn_executable_p
  
  # Sed expression to map a string onto a valid CPP name.
@@ -798,7 +823,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  test -n "$DJDIR" || exec 7<&0 </dev/null
-@@ -610,7 +603,7 @@
+@@ -610,7 +603,7 @@ MAKEFLAGS=
  
  # Identity of this package.
  PACKAGE_NAME='Rogue'
@@ -807,7 +832,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  PACKAGE_VERSION='5.4.5'
  PACKAGE_STRING='Rogue 5.4.5'
  PACKAGE_BUGREPORT='yendor@rogueforge.net'
-@@ -666,10 +659,17 @@
+@@ -666,10 +659,17 @@ TBL
  COLCRT
  GROFF
  NROFF
@@ -826,7 +851,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  OBJEXT
  EXEEXT
  ac_ct_CC
-@@ -731,6 +731,9 @@
+@@ -731,6 +731,9 @@ SHELL'
  ac_subst_files=''
  ac_user_opts='
  enable_option_checking
@@ -836,7 +861,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  with_ncurses
  with_program_name
  enable_setgid
-@@ -755,8 +758,7 @@
+@@ -755,8 +758,7 @@ CC
  CFLAGS
  LDFLAGS
  LIBS
@@ -846,7 +871,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  # Initialize some variables set by options.
-@@ -865,7 +867,7 @@
+@@ -865,7 +867,7 @@ do
      ac_useropt=`expr "x$ac_option" : 'x-*disable-\(.*\)'`
      # Reject names that are not valid shell variable names.
      expr "x$ac_useropt" : ".*[^-+._$as_cr_alnum]" >/dev/null &&
@@ -855,7 +880,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ac_useropt_orig=$ac_useropt
      ac_useropt=`printf "%s\n" "$ac_useropt" | sed 's/[-+.]/_/g'`
      case $ac_user_opts in
-@@ -891,7 +893,7 @@
+@@ -891,7 +893,7 @@ do
      ac_useropt=`expr "x$ac_option" : 'x-*enable-\([^=]*\)'`
      # Reject names that are not valid shell variable names.
      expr "x$ac_useropt" : ".*[^-+._$as_cr_alnum]" >/dev/null &&
@@ -864,7 +889,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ac_useropt_orig=$ac_useropt
      ac_useropt=`printf "%s\n" "$ac_useropt" | sed 's/[-+.]/_/g'`
      case $ac_user_opts in
-@@ -1104,7 +1106,7 @@
+@@ -1104,7 +1106,7 @@ do
      ac_useropt=`expr "x$ac_option" : 'x-*with-\([^=]*\)'`
      # Reject names that are not valid shell variable names.
      expr "x$ac_useropt" : ".*[^-+._$as_cr_alnum]" >/dev/null &&
@@ -873,7 +898,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ac_useropt_orig=$ac_useropt
      ac_useropt=`printf "%s\n" "$ac_useropt" | sed 's/[-+.]/_/g'`
      case $ac_user_opts in
-@@ -1120,7 +1122,7 @@
+@@ -1120,7 +1122,7 @@ do
      ac_useropt=`expr "x$ac_option" : 'x-*without-\(.*\)'`
      # Reject names that are not valid shell variable names.
      expr "x$ac_useropt" : ".*[^-+._$as_cr_alnum]" >/dev/null &&
@@ -882,7 +907,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ac_useropt_orig=$ac_useropt
      ac_useropt=`printf "%s\n" "$ac_useropt" | sed 's/[-+.]/_/g'`
      case $ac_user_opts in
-@@ -1150,8 +1152,8 @@
+@@ -1150,8 +1152,8 @@ do
    | --x-librar=* | --x-libra=* | --x-libr=* | --x-lib=* | --x-li=* | --x-l=*)
      x_libraries=$ac_optarg ;;
  
@@ -893,7 +918,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ;;
  
    *=*)
-@@ -1159,7 +1161,7 @@
+@@ -1159,7 +1161,7 @@ Try \`$0 --help' for more information"
      # Reject names that are not valid shell variable names.
      case $ac_envvar in #(
        '' | [0-9]* | *[!_$as_cr_alnum]* )
@@ -902,7 +927,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      esac
      eval $ac_envvar=\$ac_optarg
      export $ac_envvar ;;
-@@ -1209,7 +1211,7 @@
+@@ -1209,7 +1211,7 @@ do
    as_fn_error $? "expected an absolute directory name for --$ac_var: $ac_val"
  done
  
@@ -911,7 +936,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # used to hold the argument of --host etc.
  # FIXME: To remove some day.
  build=$build_alias
-@@ -1277,7 +1279,7 @@
+@@ -1277,7 +1279,7 @@ if test ! -r "$srcdir/$ac_unique_file"; then
    test "$ac_srcdir_defaulted" = yes && srcdir="$ac_confdir or .."
    as_fn_error $? "cannot find sources ($ac_unique_file) in $srcdir"
  fi
@@ -920,7 +945,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  ac_abs_confdir=`(
  	cd "$srcdir" && test -r "./$ac_unique_file" || as_fn_error $? "$ac_msg"
  	pwd)`
-@@ -1305,7 +1307,7 @@
+@@ -1305,7 +1307,7 @@ if test "$ac_init_help" = "long"; then
    # Omit some internal or obsolete options to make the list less imposing.
    # This message is too long to be a string in the A/UX 3.1 sh.
    cat <<_ACEOF
@@ -929,7 +954,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  Usage: $0 [OPTION]... [VAR=VALUE]...
  
-@@ -1319,11 +1321,11 @@
+@@ -1319,11 +1321,11 @@ Configuration:
        --help=short        display options specific to this package
        --help=recursive    display the short help of all the included packages
    -V, --version           display version information and exit
@@ -944,7 +969,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  Installation directories:
    --prefix=PREFIX         install architecture-independent files in PREFIX
-@@ -1331,10 +1333,10 @@
+@@ -1331,10 +1333,10 @@ Installation directories:
    --exec-prefix=EPREFIX   install architecture-dependent files in EPREFIX
                            [PREFIX]
  
@@ -959,7 +984,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  For better control, use the options below.
  
-@@ -1354,7 +1356,7 @@
+@@ -1354,7 +1356,7 @@ Fine tuning of the installation directories:
    --infodir=DIR           info documentation [DATAROOTDIR/info]
    --localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
    --mandir=DIR            man documentation [DATAROOTDIR/man]
@@ -968,7 +993,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    --htmldir=DIR           html documentation [DOCDIR]
    --dvidir=DIR            dvi documentation [DOCDIR]
    --pdfdir=DIR            pdf documentation [DOCDIR]
-@@ -1380,6 +1382,8 @@
+@@ -1380,6 +1382,8 @@ Optional Features:
    --disable-option-checking  ignore unrecognized --enable/--with options
    --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
    --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
@@ -977,7 +1002,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    --enable-setgid=NAME    install executable as setgid with group ownership of
                            NAME [default=no]
    --enable-scorefile=SCOREFILE
-@@ -1409,6 +1413,9 @@
+@@ -1409,6 +1413,9 @@ Optional Features:
  Optional Packages:
    --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
    --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
@@ -987,7 +1012,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    --with-ncurses          Force the use of ncurses over curses
    --with-program-name=NAME
                            alternate executable name
-@@ -1421,9 +1428,8 @@
+@@ -1421,9 +1428,8 @@ Some influential environment variables:
    LIBS        libraries to pass to the linker, e.g. -l<library>
    CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
                you have headers in a nonstandard directory <include dir>
@@ -998,7 +1023,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  it to find libraries and programs with nonstandard names/locations.
  
  Report bugs to <yendor@rogueforge.net>.
-@@ -1491,9 +1497,9 @@
+@@ -1491,9 +1497,9 @@ test -n "$ac_init_help" && exit $ac_status
  if $ac_init_version; then
    cat <<\_ACEOF
  Rogue configure 5.4.5
@@ -1010,7 +1035,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  This configure script is free software; the Free Software Foundation
  gives unlimited permission to copy, distribute and modify it.
  _ACEOF
-@@ -1532,11 +1538,12 @@
+@@ -1532,11 +1538,12 @@ printf "%s\n" "$ac_try_echo"; } >&5
         } && test -s conftest.$ac_objext
  then :
    ac_retval=0
@@ -1026,7 +1051,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
    eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
    as_fn_set_status $ac_retval
-@@ -1555,8 +1562,8 @@
+@@ -1555,8 +1562,8 @@ printf %s "checking for $2... " >&6; }
  if eval test \${$3+y}
  then :
    printf %s "(cached) " >&6
@@ -1037,7 +1062,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  $4
  #include <$2>
-@@ -1564,10 +1571,12 @@
+@@ -1564,10 +1571,12 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    eval "$3=yes"
@@ -1053,7 +1078,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  eval ac_res=\$$3
  	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-@@ -1588,8 +1597,8 @@
+@@ -1588,8 +1597,8 @@ printf %s "checking for $2... " >&6; }
  if eval test \${$3+y}
  then :
    printf %s "(cached) " >&6
@@ -1064,7 +1089,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  $4
-@@ -1619,12 +1628,14 @@
+@@ -1619,12 +1628,14 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
  
@@ -1082,7 +1107,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  eval ac_res=\$$3
  	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-@@ -1633,44 +1644,6 @@
+@@ -1633,44 +1644,6 @@ printf "%s\n" "$ac_res" >&6; }
  
  } # ac_fn_c_check_type
  
@@ -1127,7 +1152,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # ac_fn_c_try_link LINENO
  # -----------------------
  # Try to link conftest.$ac_ext, and return whether this succeeded.
-@@ -1702,11 +1675,12 @@
+@@ -1702,11 +1675,12 @@ printf "%s\n" "$ac_try_echo"; } >&5
         }
  then :
    ac_retval=0
@@ -1143,7 +1168,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
    # Delete the IPA/IPO (Inter Procedural Analysis/Optimization) information
    # created by the PGI compiler (conftest_ipa8_conftest.oo), as it would
-@@ -1729,15 +1703,15 @@
+@@ -1729,15 +1703,15 @@ printf %s "checking for $2... " >&6; }
  if eval test \${$3+y}
  then :
    printf %s "(cached) " >&6
@@ -1162,7 +1187,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  #include <limits.h>
  #undef $2
-@@ -1748,7 +1722,7 @@
+@@ -1748,7 +1722,7 @@ else $as_nop
  #ifdef __cplusplus
  extern "C"
  #endif
@@ -1171,7 +1196,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* The GNU C library defines this for functions which it implements
      to always fail with ENOSYS.  Some functions are actually named
      something starting with __ and the normal name is an alias.  */
-@@ -1767,11 +1741,13 @@
+@@ -1767,11 +1741,13 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    eval "$3=yes"
@@ -1188,7 +1213,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  eval ac_res=\$$3
  	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-@@ -1810,12 +1786,13 @@
+@@ -1810,12 +1786,13 @@ printf "%s\n" "$ac_try_echo"; } >&5
    test $ac_status = 0; }; }
  then :
    ac_retval=0
@@ -1205,7 +1230,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
    rm -rf conftest.dSYM conftest_ipa8_conftest.oo
    eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-@@ -1847,7 +1824,7 @@
+@@ -1847,7 +1824,7 @@ This file contains any messages produced by compilers while
  running configure, to aid debugging if configure makes a mistake.
  
  It was created by Rogue $as_me 5.4.5, which was
@@ -1214,7 +1239,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
    $ $0$ac_configure_args_raw
  
-@@ -2093,10 +2070,10 @@
+@@ -2093,10 +2070,10 @@ esac
  printf "%s\n" "$as_me: loading site script $ac_site_file" >&6;}
      sed 's/^/| /' "$ac_site_file" >&5
      . "$ac_site_file" \
@@ -1228,7 +1253,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    fi
  done
  
-@@ -2132,9 +2109,7 @@
+@@ -2132,9 +2109,7 @@ struct stat;
  /* Most of the following tests are stolen from RCS 5.7 src/conf.sh.  */
  struct buf { int x; };
  struct buf * (*rcsopen) (struct buf *, struct stat *, int);
@@ -1239,7 +1264,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  {
    return p[i];
  }
-@@ -2148,6 +2123,21 @@
+@@ -2148,6 +2123,21 @@ static char *f (char * (*g) (char **, int), char **p, ...)
    return s;
  }
  
@@ -1261,7 +1286,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* OSF 4.0 Compaq cc is some sort of almost-ANSI by default.  It has
     function prototypes and stuff, but not \xHH hex character constants.
     These do not provoke an error unfortunately, instead are silently treated
-@@ -2175,16 +2165,19 @@
+@@ -2175,16 +2165,19 @@ ok |= (argc == 0 || f (e, argv, 0) != argv[0] || f (e, argv, 1) != argv[1]);
  
  # Test code for whether the C compiler supports C99 (global declarations)
  ac_c_conftest_c99_globals='
@@ -1282,7 +1307,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  // Check varargs macros.  These examples are taken from C99 6.10.3.5.
  // dprintf is used instead of fprintf to avoid needing to declare
-@@ -2234,7 +2227,6 @@
+@@ -2234,7 +2227,6 @@ typedef const char *ccp;
  static inline int
  test_restrict (ccp restrict text)
  {
@@ -1290,7 +1315,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    // Iterate through items via the restricted pointer.
    // Also check for declarations in for loops.
    for (unsigned int i = 0; *(text+i) != '\''\0'\''; ++i)
-@@ -2300,6 +2292,8 @@
+@@ -2300,6 +2292,8 @@ ac_c_conftest_c99_main='
    ia->datasize = 10;
    for (int i = 0; i < ia->datasize; ++i)
      ia->data[i] = i * 1.234;
@@ -1299,7 +1324,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
    // Check named initializers.
    struct named_init ni = {
-@@ -2321,7 +2315,7 @@
+@@ -2321,7 +2315,7 @@ ac_c_conftest_c99_main='
  
  # Test code for whether the C compiler supports C11 (global declarations)
  ac_c_conftest_c11_globals='
@@ -1308,7 +1333,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  #if !defined __STDC_VERSION__ || __STDC_VERSION__ < 201112L
  # error "Compiler does not advertise C11 conformance"
  #endif
-@@ -2440,7 +2434,7 @@
+@@ -2440,7 +2434,7 @@ as_fn_append ac_func_c_list " vfork HAVE_VFORK"
  as_fn_append ac_func_c_list " vprintf HAVE_VPRINTF"
  
  # Auxiliary files required by this configure script.
@@ -1317,7 +1342,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  # Locations in which to look for auxiliary files.
  ac_aux_dir_candidates="${srcdir}${PATH_SEPARATOR}${srcdir}/..${PATH_SEPARATOR}${srcdir}/../.."
-@@ -2517,8 +2511,9 @@
+@@ -2517,8 +2511,9 @@ IFS=$as_save_IFS
  if $as_found
  then :
  
@@ -1329,7 +1354,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  
-@@ -2546,12 +2541,12 @@
+@@ -2546,12 +2541,12 @@ for ac_var in $ac_precious_vars; do
    eval ac_new_val=\$ac_env_${ac_var}_value
    case $ac_old_set,$ac_new_set in
      set,)
@@ -1346,7 +1371,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
        ac_cache_corrupted=: ;;
      ,);;
      *)
-@@ -2560,18 +2555,18 @@
+@@ -2560,18 +2555,18 @@ printf "%s\n" "$as_me: error: \`$ac_var' was not set in the previous run" >&2;}
  	ac_old_val_w=`echo x $ac_old_val`
  	ac_new_val_w=`echo x $ac_new_val`
  	if test "$ac_old_val_w" != "$ac_new_val_w"; then
@@ -1373,7 +1398,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
        fi;;
    esac
    # Pass precious variables to config.status.
-@@ -2587,11 +2582,11 @@
+@@ -2587,11 +2582,11 @@ printf "%s\n" "$as_me:   current value: \`$ac_new_val'" >&2;}
    fi
  done
  if $ac_cache_corrupted; then
@@ -1388,7 +1413,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  	    and start over" "$LINENO" 5
  fi
  ## -------------------- ##
-@@ -2622,15 +2617,16 @@
+@@ -2622,15 +2617,16 @@ printf %s "checking build system type... " >&6; }
  if test ${ac_cv_build+y}
  then :
    printf %s "(cached) " >&6
@@ -1408,7 +1433,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_build" >&5
  printf "%s\n" "$ac_cv_build" >&6; }
-@@ -2657,14 +2653,15 @@
+@@ -2657,14 +2653,15 @@ printf %s "checking host system type... " >&6; }
  if test ${ac_cv_host+y}
  then :
    printf %s "(cached) " >&6
@@ -1427,7 +1452,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_host" >&5
  printf "%s\n" "$ac_cv_host" >&6; }
-@@ -2691,14 +2688,15 @@
+@@ -2691,14 +2688,15 @@ printf %s "checking target system type... " >&6; }
  if test ${ac_cv_target+y}
  then :
    printf %s "(cached) " >&6
@@ -1446,7 +1471,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_target" >&5
  printf "%s\n" "$ac_cv_target" >&6; }
-@@ -2727,7 +2725,6 @@
+@@ -2727,7 +2725,6 @@ test -n "$target_alias" &&
      NONENONEs,x,x, &&
    program_prefix=${target_alias}-
  
@@ -1454,7 +1479,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # Checks for programs.
  
  
-@@ -2751,8 +2748,8 @@
+@@ -2751,8 +2748,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1465,7 +1490,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_CC="$CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -2774,7 +2771,8 @@
+@@ -2774,7 +2771,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1475,7 +1500,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  CC=$ac_cv_prog_CC
  if test -n "$CC"; then
-@@ -2796,8 +2794,8 @@
+@@ -2796,8 +2794,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_ac_ct_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1486,7 +1511,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_ac_ct_CC="$ac_ct_CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -2819,7 +2817,8 @@
+@@ -2819,7 +2817,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1496,7 +1521,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  ac_ct_CC=$ac_cv_prog_ac_ct_CC
  if test -n "$ac_ct_CC"; then
-@@ -2854,8 +2853,8 @@
+@@ -2854,8 +2853,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1507,7 +1532,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_CC="$CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -2877,7 +2876,8 @@
+@@ -2877,7 +2876,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1517,7 +1542,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  CC=$ac_cv_prog_CC
  if test -n "$CC"; then
-@@ -2899,8 +2899,8 @@
+@@ -2899,8 +2899,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1528,7 +1553,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_CC="$CC" # Let the user override the test.
  else
    ac_prog_rejected=no
-@@ -2939,7 +2939,8 @@
+@@ -2939,7 +2939,8 @@ if test $ac_prog_rejected = yes; then
      ac_cv_prog_CC="$as_dir$ac_word${1+' '}$@"
    fi
  fi
@@ -1538,7 +1563,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  CC=$ac_cv_prog_CC
  if test -n "$CC"; then
-@@ -2963,8 +2964,8 @@
+@@ -2963,8 +2964,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1549,7 +1574,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_CC="$CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -2986,7 +2987,8 @@
+@@ -2986,7 +2987,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1559,7 +1584,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  CC=$ac_cv_prog_CC
  if test -n "$CC"; then
-@@ -3012,8 +3014,8 @@
+@@ -3012,8 +3014,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_ac_ct_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1570,7 +1595,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_ac_ct_CC="$ac_ct_CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -3035,7 +3037,8 @@
+@@ -3035,7 +3037,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1580,7 +1605,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  ac_ct_CC=$ac_cv_prog_ac_ct_CC
  if test -n "$ac_ct_CC"; then
-@@ -3073,8 +3076,8 @@
+@@ -3073,8 +3076,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1591,7 +1616,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_CC="$CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -3096,7 +3099,8 @@
+@@ -3096,7 +3099,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1601,7 +1626,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  CC=$ac_cv_prog_CC
  if test -n "$CC"; then
-@@ -3118,8 +3122,8 @@
+@@ -3118,8 +3122,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_ac_ct_CC+y}
  then :
    printf %s "(cached) " >&6
@@ -1612,7 +1637,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_ac_ct_CC="$ac_ct_CC" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -3141,7 +3145,8 @@
+@@ -3141,7 +3145,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -1622,7 +1647,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  ac_ct_CC=$ac_cv_prog_ac_ct_CC
  if test -n "$ac_ct_CC"; then
-@@ -3170,10 +3175,10 @@
+@@ -3170,10 +3175,10 @@ fi
  fi
  
  
@@ -1636,7 +1661,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  # Provide some information about the compiler.
  printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for C compiler version" >&5
-@@ -3245,8 +3250,8 @@
+@@ -3245,8 +3250,8 @@ printf "%s\n" "$ac_try_echo"; } >&5
    printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
    test $ac_status = 0; }
  then :
@@ -1647,7 +1672,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # in a Makefile.  We should not override ac_cv_exeext if it was cached,
  # so that the user can short-circuit this test for compilers unknown to
  # Autoconf.
-@@ -3266,7 +3271,7 @@
+@@ -3266,7 +3271,7 @@ do
  	   ac_cv_exeext=`expr "$ac_file" : '[^.]*\(\..*\)'`
  	fi
  	# We set ac_cv_exeext here because the later test for it is not
@@ -1656,7 +1681,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  	# argument, so we may need to know it at that point already.
  	# Even if this section looks crufty: it has the advantage of
  	# actually working.
-@@ -3277,8 +3282,9 @@
+@@ -3277,8 +3282,9 @@ do
  done
  test "$ac_cv_exeext" = no && ac_cv_exeext=
  
@@ -1668,7 +1693,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  if test -z "$ac_file"
  then :
-@@ -3287,13 +3293,14 @@
+@@ -3287,13 +3293,14 @@ printf "%s\n" "no" >&6; }
  printf "%s\n" "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
  
@@ -1689,7 +1714,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for C compiler default output file name" >&5
  printf %s "checking for C compiler default output file name... " >&6; }
-@@ -3317,10 +3324,10 @@
+@@ -3317,10 +3324,10 @@ printf "%s\n" "$ac_try_echo"; } >&5
    printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
    test $ac_status = 0; }
  then :
@@ -1704,7 +1729,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  for ac_file in conftest.exe conftest conftest.*; do
    test -f "$ac_file" || continue
    case $ac_file in
-@@ -3330,11 +3337,12 @@
+@@ -3330,11 +3337,12 @@ for ac_file in conftest.exe conftest conftest.*; do
      * ) break;;
    esac
  done
@@ -1721,7 +1746,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  rm -f conftest conftest$ac_cv_exeext
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_exeext" >&5
-@@ -3350,6 +3358,8 @@
+@@ -3350,6 +3358,8 @@ int
  main (void)
  {
  FILE *f = fopen ("conftest.out", "w");
@@ -1730,7 +1755,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
   return ferror (f) || fclose (f) != 0;
  
    ;
-@@ -3389,26 +3399,27 @@
+@@ -3389,26 +3399,27 @@ printf "%s\n" "$ac_try_echo"; } >&5
      if test "$cross_compiling" = maybe; then
  	cross_compiling=yes
      else
@@ -1765,7 +1790,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  
  int
-@@ -3440,16 +3451,18 @@
+@@ -3440,16 +3451,18 @@ then :
         break;;
    esac
  done
@@ -1790,7 +1815,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_objext" >&5
  printf "%s\n" "$ac_cv_objext" >&6; }
-@@ -3460,8 +3473,8 @@
+@@ -3460,8 +3473,8 @@ printf %s "checking whether the compiler supports GNU C... " >&6; }
  if test ${ac_cv_c_compiler_gnu+y}
  then :
    printf %s "(cached) " >&6
@@ -1801,7 +1826,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  
  int
-@@ -3478,12 +3491,14 @@
+@@ -3478,12 +3491,14 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    ac_compiler_gnu=yes
@@ -1819,7 +1844,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_c_compiler_gnu" >&5
  printf "%s\n" "$ac_cv_c_compiler_gnu" >&6; }
-@@ -3501,8 +3516,8 @@
+@@ -3501,8 +3516,8 @@ printf %s "checking whether $CC accepts -g... " >&6; }
  if test ${ac_cv_prog_cc_g+y}
  then :
    printf %s "(cached) " >&6
@@ -1830,7 +1855,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
     ac_c_werror_flag=yes
     ac_cv_prog_cc_g=no
     CFLAGS="-g"
-@@ -3520,8 +3535,8 @@
+@@ -3520,8 +3535,8 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    ac_cv_prog_cc_g=yes
@@ -1841,7 +1866,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
        cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  
-@@ -3536,8 +3551,8 @@
+@@ -3536,8 +3551,8 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
  
@@ -1852,7 +1877,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  	 CFLAGS="-g"
  	 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
-@@ -3554,12 +3569,15 @@
+@@ -3554,12 +3569,15 @@ if ac_fn_c_try_compile "$LINENO"
  then :
    ac_cv_prog_cc_g=yes
  fi
@@ -1871,7 +1896,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_cc_g" >&5
  printf "%s\n" "$ac_cv_prog_cc_g" >&6; }
-@@ -3586,8 +3604,8 @@
+@@ -3586,8 +3604,8 @@ printf %s "checking for $CC option to enable C11 features... " >&6; }
  if test ${ac_cv_prog_cc_c11+y}
  then :
    printf %s "(cached) " >&6
@@ -1882,7 +1907,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  ac_save_CC=$CC
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
-@@ -3604,25 +3622,28 @@
+@@ -3604,25 +3622,28 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam
    test "x$ac_cv_prog_cc_c11" != "xno" && break
  done
  rm -f conftest.$ac_ext
@@ -1918,7 +1943,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  fi
  if test x$ac_prog_cc_stdc = xno
-@@ -3632,8 +3653,8 @@
+@@ -3632,8 +3653,8 @@ printf %s "checking for $CC option to enable C99 features... " >&6; }
  if test ${ac_cv_prog_cc_c99+y}
  then :
    printf %s "(cached) " >&6
@@ -1929,7 +1954,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  ac_save_CC=$CC
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
-@@ -3650,25 +3671,28 @@
+@@ -3650,25 +3671,28 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam
    test "x$ac_cv_prog_cc_c99" != "xno" && break
  done
  rm -f conftest.$ac_ext
@@ -1965,7 +1990,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  fi
  if test x$ac_prog_cc_stdc = xno
-@@ -3678,8 +3702,8 @@
+@@ -3678,8 +3702,8 @@ printf %s "checking for $CC option to enable C89 features... " >&6; }
  if test ${ac_cv_prog_cc_c89+y}
  then :
    printf %s "(cached) " >&6
@@ -1976,7 +2001,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  ac_save_CC=$CC
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
-@@ -3696,25 +3720,28 @@
+@@ -3696,25 +3720,28 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam
    test "x$ac_cv_prog_cc_c89" != "xno" && break
  done
  rm -f conftest.$ac_ext
@@ -2012,7 +2037,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  fi
  
-@@ -3725,6 +3752,89 @@
+@@ -3725,6 +3752,89 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
  ac_compiler_gnu=$ac_cv_c_compiler_gnu
  
  
@@ -2102,7 +2127,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # Checks for libraries.
  
  # Checks for header files.
-@@ -3763,8 +3873,8 @@
+@@ -3763,8 +3873,8 @@ printf %s "checking for grep that handles long lines and -e... " >&6; }
  if test ${ac_cv_path_GREP+y}
  then :
    printf %s "(cached) " >&6
@@ -2113,7 +2138,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_path_GREP_found=false
    # Loop through the user's path and test for each of PROGNAME-LIST
    as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -3783,9 +3893,10 @@
+@@ -3783,9 +3893,10 @@ do
        as_fn_executable_p "$ac_path_GREP" || continue
  # Check for GNU ac_path_GREP and select it if it is found.
    # Check for GNU $ac_path_GREP
@@ -2125,7 +2150,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  *)
    ac_count=0
    printf %s 0123456789 >"conftest.in"
-@@ -3820,23 +3931,21 @@
+@@ -3820,23 +3931,21 @@ IFS=$as_save_IFS
  else
    ac_cv_path_GREP=$GREP
  fi
@@ -2153,7 +2178,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
     then ac_cv_path_EGREP="$GREP -E"
     else
       if test -z "$EGREP"; then
-@@ -3858,9 +3967,10 @@
+@@ -3858,9 +3967,10 @@ do
        as_fn_executable_p "$ac_path_EGREP" || continue
  # Check for GNU ac_path_EGREP and select it if it is found.
    # Check for GNU $ac_path_EGREP
@@ -2165,7 +2190,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  *)
    ac_count=0
    printf %s 0123456789 >"conftest.in"
-@@ -3896,12 +4006,15 @@
+@@ -3896,12 +4006,15 @@ else
    ac_cv_path_EGREP=$EGREP
  fi
  
@@ -2182,7 +2207,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  ac_fn_c_check_header_compile "$LINENO" "arpa/inet.h" "ac_cv_header_arpa_inet_h" "$ac_includes_default"
-@@ -3994,6 +4107,12 @@
+@@ -3994,6 +4107,12 @@ then :
    printf "%s\n" "#define HAVE_PROCESS_H 1" >>confdefs.h
  
  fi
@@ -2195,7 +2220,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  # Checks for typedefs, structures, and compiler characteristics.
-@@ -4006,25 +4125,25 @@
+@@ -4006,25 +4125,25 @@ printf "%s\n" "#define HAVE__BOOL 1" >>confdefs.h
  
  fi
  
@@ -2217,15 +2242,14 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
 -               #error "__bool_true_false_are_defined is not defined"
 -             #endif
 -             char a[__bool_true_false_are_defined == 1 ? 1 : -1];
--
++             /* "true" and "false" should be usable in #if expressions and
++                integer constant expressions, and "bool" should be a valid
++                type name.
+ 
 -             /* Regardless of whether this is C++ or "_Bool" is a
 -                valid type name, "true" and "false" should be usable
 -                in #if expressions and integer constant expressions,
 -                and "bool" should be a valid type name.  */
-+             /* "true" and "false" should be usable in #if expressions and
-+                integer constant expressions, and "bool" should be a valid
-+                type name.
-+
 +                Although C99 requires bool, true, and false to be macros,
 +                C23 and C++11 overrule that, so do not test for that.
 +                Although C99 requires __bool_true_false_are_defined and
@@ -2234,7 +2258,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
               #if !true
                 #error "'true' is not true"
-@@ -4058,43 +4177,12 @@
+@@ -4058,43 +4177,12 @@ else $as_nop
               char n[sizeof m == h * sizeof m[0] ? 1 : -1];
               char o[-1 - (bool) 0 < 0 ? 1 : -1];
               /* Catch a bug in an HP-UX C compiler.  See
@@ -2280,7 +2304,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  int
  main (void)
  {
-@@ -4103,20 +4191,10 @@
+@@ -4103,20 +4191,10 @@ main (void)
               *pp |= p;
               *pp |= ! p;
  
@@ -2303,7 +2327,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
    ;
    return 0;
-@@ -4125,10 +4203,12 @@
+@@ -4125,10 +4203,12 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    ac_cv_header_stdbool_h=yes
@@ -2319,7 +2343,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_header_stdbool_h" >&5
  printf "%s\n" "$ac_cv_header_stdbool_h" >&6; }
-@@ -4144,8 +4224,8 @@
+@@ -4144,8 +4224,8 @@ printf %s "checking for an ANSI C-conforming const... " >&6; }
  if test ${ac_cv_c_const+y}
  then :
    printf %s "(cached) " >&6
@@ -2330,7 +2354,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  
  int
-@@ -4209,10 +4289,12 @@
+@@ -4209,10 +4289,12 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    ac_cv_c_const=yes
@@ -2346,7 +2370,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_c_const" >&5
  printf "%s\n" "$ac_cv_c_const" >&6; }
-@@ -4222,179 +4304,37 @@
+@@ -4222,179 +4304,37 @@ printf "%s\n" "#define const /**/" >>confdefs.h
  
  fi
  
@@ -2543,7 +2567,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether struct tm is in sys/time.h or time.h" >&5
-@@ -4402,8 +4342,8 @@
+@@ -4402,8 +4342,8 @@ printf %s "checking whether struct tm is in sys/time.h or time.h... " >&6; }
  if test ${ac_cv_struct_tm+y}
  then :
    printf %s "(cached) " >&6
@@ -2554,7 +2578,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  #include <sys/types.h>
  #include <time.h>
-@@ -4421,10 +4361,12 @@
+@@ -4421,10 +4361,12 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    ac_cv_struct_tm=time.h
@@ -2570,7 +2594,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_struct_tm" >&5
  printf "%s\n" "$ac_cv_struct_tm" >&6; }
-@@ -4450,8 +4392,8 @@
+@@ -4450,8 +4392,8 @@ printf %s "checking for working curses... " >&6; }
  if test ${mp_cv_curses+y}
  then :
    printf %s "(cached) " >&6
@@ -2581,7 +2605,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  #include <curses.h>
-@@ -4466,11 +4408,13 @@
+@@ -4466,11 +4408,13 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    mp_cv_curses=yes
@@ -2598,10 +2622,11 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $mp_cv_curses" >&5
  printf "%s\n" "$mp_cv_curses" >&6; }
-@@ -4485,13 +4429,54 @@
+@@ -4484,14 +4428,55 @@ printf "%s\n" "#define HAVE_CURSES_H 1" >>confdefs.h
+      fi
     fi
     if test ! "$CURSES_LIB"
-    then
++   then
 +     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for working ncursesw" >&5
 +printf %s "checking for working ncursesw... " >&6; }
 +if test ${mp_cv_ncursesw+y}
@@ -2642,7 +2667,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
 +     fi
 +   fi
 +   if test ! "$CURSES_LIB"
-+   then
+    then
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for working ncurses" >&5
  printf %s "checking for working ncurses... " >&6; }
  if test ${mp_cv_ncurses+y}
@@ -2655,7 +2680,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  #include <ncurses.h>
-@@ -4506,11 +4491,13 @@
+@@ -4506,11 +4491,13 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    mp_cv_ncurses=yes
@@ -2672,7 +2697,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $mp_cv_ncurses" >&5
  printf "%s\n" "$mp_cv_ncurses" >&6; }
-@@ -4529,8 +4516,8 @@
+@@ -4529,8 +4516,8 @@ printf %s "checking for working pdcurses... " >&6; }
  if test ${mp_cv_pdcurses+y}
  then :
    printf %s "(cached) " >&6
@@ -2683,7 +2708,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  #include <curses.h>
-@@ -4545,11 +4532,13 @@
+@@ -4545,11 +4532,13 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    mp_cv_pdcurses=yes
@@ -2700,7 +2725,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $mp_cv_pdcurses" >&5
  printf "%s\n" "$mp_cv_pdcurses" >&6; }
-@@ -4568,8 +4557,8 @@
+@@ -4568,8 +4557,8 @@ printf %s "checking for working pdcur... " >&6; }
  if test ${mp_cv_pdcur+y}
  then :
    printf %s "(cached) " >&6
@@ -2711,7 +2736,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  #include <curses.h>
-@@ -4584,11 +4573,13 @@
+@@ -4584,11 +4573,13 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    mp_cv_pdcur=yes
@@ -2728,7 +2753,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $mp_cv_pdcur" >&5
  printf "%s\n" "$mp_cv_pdcur" >&6; }
-@@ -4607,8 +4598,8 @@
+@@ -4607,8 +4598,8 @@ printf %s "checking for working peer pdcurses... " >&6; }
  if test ${mp_cv_lpdcurses+y}
  then :
    printf %s "(cached) " >&6
@@ -2739,7 +2764,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
  #include "../pdcurses/curses.h"
-@@ -4623,11 +4614,13 @@
+@@ -4623,11 +4614,13 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    mp_cv_lpdcurses=yes
@@ -2756,7 +2781,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $mp_cv_lpdcurses" >&5
  printf "%s\n" "$mp_cv_lpdcurses" >&6; }
-@@ -4665,8 +4658,8 @@
+@@ -4665,8 +4658,8 @@ printf %s "checking for ESCDELAY variable... " >&6; }
  if test ${mc_cv_ncurses_escdelay+y}
  then :
    printf %s "(cached) " >&6
@@ -2767,7 +2792,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  
  int
-@@ -4683,12 +4676,14 @@
+@@ -4683,12 +4676,14 @@ _ACEOF
  if ac_fn_c_try_link "$LINENO"
  then :
    mc_cv_ncurses_escdelay=yes
@@ -2785,7 +2810,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $mc_cv_ncurses_escdelay" >&5
  printf "%s\n" "$mc_cv_ncurses_escdelay" >&6; }
-@@ -4708,8 +4703,8 @@
+@@ -4708,8 +4703,8 @@ printf "%s\n" "#define HAVE_ESCDELAY 1" >>confdefs.h
  if test "x$ac_cv_type_pid_t" = xyes
  then :
  
@@ -2796,7 +2821,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  
            #if defined _WIN64 && !defined __CYGWIN__
-@@ -4728,14 +4723,16 @@
+@@ -4728,14 +4723,16 @@ _ACEOF
  if ac_fn_c_try_compile "$LINENO"
  then :
    ac_pid_type='int'
@@ -2816,7 +2841,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  
-@@ -4762,19 +4759,19 @@
+@@ -4762,19 +4759,19 @@ printf %s "checking for working fork... " >&6; }
  if test ${ac_cv_func_fork_works+y}
  then :
    printf %s "(cached) " >&6
@@ -2841,7 +2866,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  	  return fork () < 0;
  
    ;
-@@ -4784,13 +4781,16 @@
+@@ -4784,13 +4781,16 @@ _ACEOF
  if ac_fn_c_try_run "$LINENO"
  then :
    ac_cv_func_fork_works=yes
@@ -2862,7 +2887,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_fork_works" >&5
  printf "%s\n" "$ac_cv_func_fork_works" >&6; }
-@@ -4818,12 +4818,12 @@
+@@ -4818,12 +4818,12 @@ printf %s "checking for working vfork... " >&6; }
  if test ${ac_cv_func_vfork_works+y}
  then :
    printf %s "(cached) " >&6
@@ -2879,7 +2904,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  /* Thanks to Paul Eggert for this test.  */
  $ac_includes_default
-@@ -4934,13 +4934,16 @@
+@@ -4934,13 +4934,16 @@ _ACEOF
  if ac_fn_c_try_run "$LINENO"
  then :
    ac_cv_func_vfork_works=yes
@@ -2900,7 +2925,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_vfork_works" >&5
  printf "%s\n" "$ac_cv_func_vfork_works" >&6; }
-@@ -4967,58 +4970,13 @@
+@@ -4967,58 +4970,13 @@ printf "%s\n" "#define HAVE_WORKING_FORK 1" >>confdefs.h
  
  fi
  
@@ -2961,7 +2986,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  echo >conftest.file
  if test "$as_ln_s" = "ln -s" && ln -s conftest.file conftest.sym; then
    if test "$cross_compiling" = yes
-@@ -5029,8 +4987,8 @@
+@@ -5029,8 +4987,8 @@ then :
  			   # If we don't know, assume the worst.
  		   *)      ac_cv_func_lstat_dereferences_slashed_symlink=no ;;
  		 esac
@@ -2972,7 +2997,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  $ac_includes_default
  int
-@@ -5048,20 +5006,23 @@
+@@ -5048,20 +5006,23 @@ _ACEOF
  if ac_fn_c_try_run "$LINENO"
  then :
    ac_cv_func_lstat_dereferences_slashed_symlink=yes
@@ -3001,7 +3026,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_lstat_dereferences_slashed_symlink" >&5
  printf "%s\n" "$ac_cv_func_lstat_dereferences_slashed_symlink" >&6; }
-@@ -5085,12 +5046,12 @@
+@@ -5085,12 +5046,12 @@ printf %s "checking whether lstat accepts an empty string... " >&6; }
  if test ${ac_cv_func_lstat_empty_string_bug+y}
  then :
    printf %s "(cached) " >&6
@@ -3018,7 +3043,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  $ac_includes_default
  int
-@@ -5105,13 +5066,16 @@
+@@ -5105,13 +5066,16 @@ _ACEOF
  if ac_fn_c_try_run "$LINENO"
  then :
    ac_cv_func_lstat_empty_string_bug=no
@@ -3039,7 +3064,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_lstat_empty_string_bug" >&5
  printf "%s\n" "$ac_cv_func_lstat_empty_string_bug" >&6; }
-@@ -5132,8 +5096,8 @@
+@@ -5132,8 +5096,8 @@ printf %s "checking whether lstat correctly handles trailing slash... " >&6; }
  if test ${ac_cv_func_lstat_dereferences_slashed_symlink+y}
  then :
    printf %s "(cached) " >&6
@@ -3050,7 +3075,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  echo >conftest.file
  if test "$as_ln_s" = "ln -s" && ln -s conftest.file conftest.sym; then
    if test "$cross_compiling" = yes
-@@ -5144,8 +5108,8 @@
+@@ -5144,8 +5108,8 @@ then :
  			   # If we don't know, assume the worst.
  		   *)      ac_cv_func_lstat_dereferences_slashed_symlink=no ;;
  		 esac
@@ -3061,7 +3086,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  $ac_includes_default
  int
-@@ -5163,20 +5127,23 @@
+@@ -5163,20 +5127,23 @@ _ACEOF
  if ac_fn_c_try_run "$LINENO"
  then :
    ac_cv_func_lstat_dereferences_slashed_symlink=yes
@@ -3090,7 +3115,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_lstat_dereferences_slashed_symlink" >&5
  printf "%s\n" "$ac_cv_func_lstat_dereferences_slashed_symlink" >&6; }
-@@ -5195,37 +5162,108 @@
+@@ -5195,37 +5162,108 @@ esac
  
  fi
  
@@ -3224,7 +3249,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether stat accepts an empty string" >&5
-@@ -5233,12 +5271,12 @@
+@@ -5233,12 +5271,12 @@ printf %s "checking whether stat accepts an empty string... " >&6; }
  if test ${ac_cv_func_stat_empty_string_bug+y}
  then :
    printf %s "(cached) " >&6
@@ -3241,7 +3266,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  /* end confdefs.h.  */
  $ac_includes_default
  int
-@@ -5253,13 +5291,16 @@
+@@ -5253,13 +5291,16 @@ _ACEOF
  if ac_fn_c_try_run "$LINENO"
  then :
    ac_cv_func_stat_empty_string_bug=no
@@ -3262,7 +3287,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_stat_empty_string_bug" >&5
  printf "%s\n" "$ac_cv_func_stat_empty_string_bug" >&6; }
-@@ -5288,6 +5329,75 @@
+@@ -5288,6 +5329,75 @@ printf "%s\n" "#define HAVE_DOPRNT 1" >>confdefs.h
  fi
  
  fi
@@ -3338,7 +3363,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  ac_fn_c_check_func "$LINENO" "erasechar" "ac_cv_func_erasechar"
  if test "x$ac_cv_func_erasechar" = xyes
  then :
-@@ -5420,6 +5530,18 @@
+@@ -5420,6 +5530,18 @@ then :
    printf "%s\n" "#define HAVE_GETGID 1" >>confdefs.h
  
  fi
@@ -3357,7 +3382,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  # Extract the first word of "nroff", so it can be a program name with args.
-@@ -5429,8 +5551,8 @@
+@@ -5429,8 +5551,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_NROFF+y}
  then :
    printf %s "(cached) " >&6
@@ -3368,7 +3393,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_NROFF="$NROFF" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -5452,7 +5574,8 @@
+@@ -5452,7 +5574,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -3378,7 +3403,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  NROFF=$ac_cv_prog_NROFF
  if test -n "$NROFF"; then
-@@ -5471,8 +5594,8 @@
+@@ -5471,8 +5594,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_GROFF+y}
  then :
    printf %s "(cached) " >&6
@@ -3389,7 +3414,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_GROFF="$GROFF" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -5494,7 +5617,8 @@
+@@ -5494,7 +5617,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -3399,7 +3424,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  GROFF=$ac_cv_prog_GROFF
  if test -n "$GROFF"; then
-@@ -5513,8 +5637,8 @@
+@@ -5513,8 +5637,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_COLCRT+y}
  then :
    printf %s "(cached) " >&6
@@ -3410,7 +3435,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_COLCRT="$COLCRT" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -5536,7 +5660,8 @@
+@@ -5536,7 +5660,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -3420,7 +3445,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  COLCRT=$ac_cv_prog_COLCRT
  if test -n "$COLCRT"; then
-@@ -5555,8 +5680,8 @@
+@@ -5555,8 +5680,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_TBL+y}
  then :
    printf %s "(cached) " >&6
@@ -3431,7 +3456,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_TBL="$TBL" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -5578,7 +5703,8 @@
+@@ -5578,7 +5703,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -3441,7 +3466,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  TBL=$ac_cv_prog_TBL
  if test -n "$TBL"; then
-@@ -5597,8 +5723,8 @@
+@@ -5597,8 +5723,8 @@ printf %s "checking for $ac_word... " >&6; }
  if test ${ac_cv_prog_SED+y}
  then :
    printf %s "(cached) " >&6
@@ -3452,7 +3477,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    ac_cv_prog_SED="$SED" # Let the user override the test.
  else
  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-@@ -5620,7 +5746,8 @@
+@@ -5620,7 +5746,8 @@ done
    done
  IFS=$as_save_IFS
  
@@ -3462,7 +3487,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  SED=$ac_cv_prog_SED
  if test -n "$SED"; then
-@@ -5656,8 +5783,9 @@
+@@ -5656,8 +5783,9 @@ fi
  if test ${with_program_name+y}
  then :
    withval=$with_program_name; progname="$withval"
@@ -3474,7 +3499,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  PROGRAM=$progname
-@@ -5791,8 +5919,9 @@
+@@ -5791,8 +5919,9 @@ fi
  if test ${enable_savedir+y}
  then :
    enableval=$enable_savedir;
@@ -3486,7 +3511,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for save directory" >&5
-@@ -5853,8 +5982,9 @@
+@@ -5853,8 +5982,9 @@ fi
  if test ${enable_allscores+y}
  then :
    enableval=$enable_allscores;
@@ -3498,7 +3523,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi
  
  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if allscores is enabled" >&5
-@@ -6094,8 +6224,8 @@
+@@ -6094,8 +6224,8 @@ cat >confcache <<\_ACEOF
  # config.status only pays attention to the cache file if you give it
  # the --recheck option to rerun configure.
  #
@@ -3509,7 +3534,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # following values.
  
  _ACEOF
-@@ -6125,14 +6255,14 @@
+@@ -6125,14 +6255,14 @@ printf "%s\n" "$as_me: WARNING: cache variable $ac_var contains a newline" >&2;}
    (set) 2>&1 |
      case $as_nl`(ac_space=' '; set) 2>&1` in #(
      *${as_nl}ac_space=\ *)
@@ -3526,7 +3551,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
        sed -n "/^[_$as_cr_alnum]*_cv_[_$as_cr_alnum]*=/p"
        ;;
      esac |
-@@ -6222,7 +6352,6 @@
+@@ -6222,7 +6352,6 @@ cat >>$CONFIG_STATUS <<\_ASEOF || as_write_fail=1
  
  # Be more Bourne compatible
  DUALCASE=1; export DUALCASE # for MKS sh
@@ -3534,7 +3559,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  if test ${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
  then :
    emulate sh
-@@ -6231,12 +6360,13 @@
+@@ -6231,12 +6360,13 @@ then :
    # is contrary to our usage.  Disable this feature.
    alias -g '${1+"$@"}'='"$@"'
    setopt NO_GLOB_SUBST
@@ -3550,7 +3575,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  esac
  fi
  
-@@ -6308,7 +6438,7 @@
+@@ -6308,7 +6438,7 @@ IFS=$as_save_IFS
  
       ;;
  esac
@@ -3559,7 +3584,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # in which case we are not to be found in the path.
  if test "x$as_myself" = x; then
    as_myself=$0
-@@ -6337,7 +6467,6 @@
+@@ -6337,7 +6467,6 @@ as_fn_error ()
  } # as_fn_error
  
  
@@ -3567,7 +3592,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # as_fn_set_status STATUS
  # -----------------------
  # Set $? to STATUS, without forking.
-@@ -6377,11 +6506,12 @@
+@@ -6377,11 +6506,12 @@ then :
    {
      eval $1+=\$2
    }'
@@ -3583,7 +3608,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi # as_fn_append
  
  # as_fn_arith ARG...
-@@ -6395,11 +6525,12 @@
+@@ -6395,11 +6525,12 @@ then :
    {
      as_val=$(( $* ))
    }'
@@ -3599,7 +3624,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  fi # as_fn_arith
  
  
-@@ -6482,9 +6613,9 @@
+@@ -6482,9 +6613,9 @@ if (echo >conf$$.file) 2>/dev/null; then
    if ln -s conf$$.file conf$$ 2>/dev/null; then
      as_ln_s='ln -s'
      # ... but there are two gotchas:
@@ -3612,7 +3637,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      ln -s conf$$.file conf$$.dir 2>/dev/null && test ! -f conf$$.exe ||
        as_ln_s='cp -pR'
    elif ln conf$$.file conf$$ 2>/dev/null; then
-@@ -6565,10 +6696,12 @@
+@@ -6565,10 +6696,12 @@ as_test_x='test -x'
  as_executable_p=as_fn_executable_p
  
  # Sed expression to map a string onto a valid CPP name.
@@ -3627,7 +3652,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
  
  exec 6>&1
-@@ -6584,7 +6717,7 @@
+@@ -6584,7 +6717,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
  # values after options handling.
  ac_log="
  This file was extended by Rogue $as_me 5.4.5, which was
@@ -3636,7 +3661,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
    CONFIG_FILES    = $CONFIG_FILES
    CONFIG_HEADERS  = $CONFIG_HEADERS
-@@ -6615,7 +6748,7 @@
+@@ -6615,7 +6748,7 @@ _ACEOF
  
  cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
  ac_cs_usage="\
@@ -3645,7 +3670,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  from templates according to the current configuration.  Unless the files
  and actions are specified as TAGs, all are instantiated by default.
  
-@@ -6648,15 +6781,16 @@
+@@ -6648,15 +6781,16 @@ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
  ac_cs_config='$ac_cs_config_escaped'
  ac_cs_version="\\
  Rogue config.status 5.4.5
@@ -3664,7 +3689,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  test -n "\$AWK" || AWK=awk
  _ACEOF
  
-@@ -6710,8 +6844,8 @@
+@@ -6710,8 +6844,8 @@ do
      ac_need_defaults=false;;
    --he | --h)
      # Conflict between --help and --header
@@ -3675,7 +3700,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    --help | --hel | -h )
      printf "%s\n" "$ac_cs_usage"; exit ;;
    -q | -quiet | --quiet | --quie | --qui | --qu | --q \
-@@ -6719,8 +6853,8 @@
+@@ -6719,8 +6853,8 @@ Try \`$0 --help' for more information.";;
      ac_cs_silent=: ;;
  
    # This is an error.
@@ -3686,7 +3711,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  
    *) as_fn_append ac_config_targets " $1"
       ac_need_defaults=false ;;
-@@ -6776,7 +6910,7 @@
+@@ -6776,7 +6910,7 @@ do
      "rogue.html") CONFIG_FILES="$CONFIG_FILES rogue.html" ;;
      "rogue.me") CONFIG_FILES="$CONFIG_FILES rogue.me" ;;
  
@@ -3695,7 +3720,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    esac
  done
  
-@@ -6795,7 +6929,7 @@
+@@ -6795,7 +6929,7 @@ fi
  # creating and moving files from /tmp can sometimes cause problems.
  # Hook for its removal unless debugging.
  # Note that there is a small window in which the directory will not be cleaned:
@@ -3704,7 +3729,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  $debug ||
  {
    tmp= ac_tmp=
-@@ -6819,7 +6953,7 @@
+@@ -6819,7 +6953,7 @@ ac_tmp=$tmp
  
  # Set up the scripts for CONFIG_FILES section.
  # No need to generate them if there are no CONFIG_FILES.
@@ -3713,7 +3738,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  if test -n "$CONFIG_FILES"; then
  
  
-@@ -6977,13 +7111,13 @@
+@@ -6977,13 +7111,13 @@ fi # test -n "$CONFIG_FILES"
  
  # Set up the scripts for CONFIG_HEADERS section.
  # No need to generate them if there are no CONFIG_HEADERS.
@@ -3729,7 +3754,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # here-document in config.status, that substitutes the proper values into
  # config.h.in to produce config.h.
  
-@@ -7093,7 +7227,7 @@
+@@ -7093,7 +7227,7 @@ do
    esac
    case $ac_mode$ac_tag in
    :[FHL]*:*);;
@@ -3738,7 +3763,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
    :[FH]-) ac_tag=-:-;;
    :[FH]*) ac_tag=$ac_tag:$ac_tag.in;;
    esac
-@@ -7115,19 +7249,19 @@
+@@ -7115,19 +7249,19 @@ do
        -) ac_f="$ac_tmp/stdin";;
        *) # Look for the file first in the build tree, then in the source tree
  	 # (if the path is not absolute).  The absolute path cannot be DOS-style,
@@ -3761,7 +3786,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
      # use $as_me), people would be surprised to read:
      #    /* config.h.  Generated by config.status.  */
      configure_input='Generated from '`
-@@ -7218,6 +7352,10 @@
+@@ -7218,6 +7352,10 @@ ac_abs_srcdir=$ac_abs_top_srcdir$ac_dir_suffix
    # CONFIG_FILE
    #
  
@@ -3772,7 +3797,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  _ACEOF
  
  cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
-@@ -7251,7 +7389,7 @@
+@@ -7251,7 +7389,7 @@ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
  esac
  _ACEOF
  
@@ -3781,7 +3806,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  # Shell code in configure.ac might set extrasub.
  # FIXME: do we really want to maintain this feature?
  cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
-@@ -7271,6 +7409,7 @@
+@@ -7271,6 +7409,7 @@ s&@abs_top_srcdir@&$ac_abs_top_srcdir&;t t
  s&@builddir@&$ac_builddir&;t t
  s&@abs_builddir@&$ac_abs_builddir&;t t
  s&@abs_top_builddir@&$ac_abs_top_builddir&;t t
@@ -3789,7 +3814,7 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  $ac_datarootdir_hack
  "
  eval sed \"\$ac_sed_extra\" "$ac_file_inputs" | $AWK -f "$ac_tmp/subs.awk" \
-@@ -7280,9 +7419,9 @@
+@@ -7280,9 +7419,9 @@ test -z "$ac_datarootdir_hack$ac_datarootdir_seen" &&
    { ac_out=`sed -n '/\${datarootdir}/p' "$ac_tmp/out"`; test -n "$ac_out"; } &&
    { ac_out=`sed -n '/^[	 ]*datarootdir[	 ]*:*=/p' \
        "$ac_tmp/out"`; test -z "$ac_out"; } &&
@@ -3801,9 +3826,10 @@ diff -Naur rogue5.4.5x-src.orig/configure rogue5.4.5x-src/configure
  which seems to be undefined.  Please make sure it is defined" >&2;}
  
    rm -f "$ac_tmp/stdin"
-diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
---- rogue5.4.5x-src.orig/configure.ac	2021-03-25 09:15:26.000000000 +0900
-+++ rogue5.4.5x-src/configure.ac	2025-08-02 14:57:24.464491952 +0900
+diff --git a/configure.ac b/configure.ac
+index 1aed1f4..af4f3db 100644
+--- a/configure.ac
++++ b/configure.ac
 @@ -1,21 +1,24 @@
  #                                               -*- Autoconf -*-
  # Process this file with autoconf to produce a configure script.
@@ -3835,7 +3861,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  
  # Checks for typedefs, structures, and compiler characteristics.
  AC_HEADER_STDBOOL
-@@ -26,13 +29,16 @@
+@@ -26,13 +29,16 @@ AC_STRUCT_TM
  MP_WITH_CURSES
  # Checks for library functions.
  AC_FUNC_FORK
@@ -3855,7 +3881,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  
  AC_CHECK_PROG([NROFF], [nroff], [nroff],)
  AC_CHECK_PROG([GROFF], [groff], [groff],)
-@@ -58,11 +64,11 @@
+@@ -58,11 +64,11 @@ AC_SUBST(DOCS_GROFF)
  AC_SUBST(DOCS_NROFF)
  AC_SUBST(DOCS_NONE)
  
@@ -3869,7 +3895,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([if using setgid execute bit])
  if test "x$enable_setgid" = "xno" ; then
  GROUPOWNER=
-@@ -83,7 +89,7 @@
+@@ -83,7 +89,7 @@ fi
  
  AC_SUBST(GROUPOWNER)
  
@@ -3878,7 +3904,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([for scoreboard file])
  if test "x$enable_scorefile" = "xno" ; then
  SCOREFILE=
-@@ -104,7 +110,7 @@
+@@ -104,7 +110,7 @@ fi
  
  AC_SUBST(SCOREFILE)
  
@@ -3887,7 +3913,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([for log file])
  if test "x$enable_logfile" = "xno" ; then
  LOGFILE=
-@@ -125,7 +131,7 @@
+@@ -125,7 +131,7 @@ fi
  
  AC_SUBST(LOGFILE)
  
@@ -3896,7 +3922,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([for scoreboard lockfile file])
  if test "x$enable_lockfile" = "xno" ; then
  LOCKFILE=
-@@ -146,7 +152,7 @@
+@@ -146,7 +152,7 @@ fi
  
  AC_SUBST(LOCKFILE)
  
@@ -3905,7 +3931,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([for save directory])
  if test "x$enable_savedir" = "xno" ; then
  SAVEDIR=
-@@ -169,7 +175,7 @@
+@@ -169,7 +175,7 @@ fi
  
  AC_SUBST(SAVEDIR)
  
@@ -3914,7 +3940,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([if wizard mode is enabled])
  if test "x$enable_wizardmode" = "xno" ; then
  AC_MSG_RESULT([no])
-@@ -183,7 +189,7 @@
+@@ -183,7 +189,7 @@ fi
  AC_MSG_RESULT([yes])
  fi
  
@@ -3923,7 +3949,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([if allscores is enabled])
  if test "x$enable_allscores" = "xyes" ; then
  AC_DEFINE([ALLSCORES], [1], [Define if scorefile is top scores, not top players])
-@@ -192,7 +198,7 @@
+@@ -192,7 +198,7 @@ else
  AC_MSG_RESULT([no])
  fi
  
@@ -3932,7 +3958,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([if checktime is enabled])
  if test "x$enable_checktime" = "xyes" ; then
  AC_DEFINE([CHECKTIME], [1], [Define if checktime feature should be enabled])
-@@ -201,7 +207,7 @@
+@@ -201,7 +207,7 @@ else
  AC_MSG_RESULT([no])
  fi
  
@@ -3941,7 +3967,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([runtime execution limit (maximum system load average)])
  if test "x$enable_maxload" = "xyes" ; then
  AC_DEFINE([MAXLOAD], [100], [Define if maxload feature should be enabled])
-@@ -215,7 +221,7 @@
+@@ -215,7 +221,7 @@ AC_DEFINE_UNQUOTED([MAXLOAD], [$enable_maxload], [Define if maxload feature shou
  AC_MSG_RESULT([$enable_maxload])
  fi
  
@@ -3950,7 +3976,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([runtime execution limit (maximum online system users)])
  if test "x$enable_maxusers" = "xyes" ; then
  AC_DEFINE([MAXUSERS], [100], [Define if maxusers feature should be enabled])
-@@ -229,7 +235,7 @@
+@@ -229,7 +235,7 @@ AC_DEFINE_UNQUOTED([MAXLOAD], [$enable_maxusers], [Define if maxusers feature sh
  AC_MSG_RESULT([$enable_maxusers])
  fi
  
@@ -3959,7 +3985,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([what the number of scores to store in scoreboard is])
  if test "x$numscores" = "xyes" ; then
  AC_DEFINE([NUMSCORES], [10], [number of scores to store in scoreboard])
-@@ -245,7 +251,7 @@
+@@ -245,7 +251,7 @@ AC_DEFINE_UNQUOTED([NUMSCORES], [$enable_numscores], [number of scores to store
  AC_MSG_RESULT([$enable_numscores])
  fi
  
@@ -3968,7 +3994,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([word for the number of scores to store in scoreboard is])
  if test "x$enable_numname" = "xyes" ; then
  AC_DEFINE([NUMNAME], ["Ten"], [word for the number of scores to store in scoreboard])
-@@ -261,7 +267,7 @@
+@@ -261,7 +267,7 @@ AC_DEFINE_UNQUOTED([NUMNAME], ["$enable_numname"], [word for the number of score
  AC_MSG_RESULT([$enable_numname])
  fi
  
@@ -3977,7 +4003,7 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([whether to use program's built in load average function])
  if test "x$enable_loadav" = "xyes" ; then
  AC_DEFINE([LOADAV], [], [define if we should use program's load average function instead of system])
-@@ -277,7 +283,7 @@
+@@ -277,7 +283,7 @@ AC_DEFINE_UNQUOTED([NAMELIST], [$enable_loadav], [kernel file to pass to nlist()
  AC_MSG_RESULT([$enable_loadav])
  fi
  
@@ -3986,9 +4012,10 @@ diff -Naur rogue5.4.5x-src.orig/configure.ac rogue5.4.5x-src/configure.ac
  AC_MSG_CHECKING([whether to use program's built in user counting function])
  if test "x$enable_ucount" = "xyes" ; then
  AC_DEFINE([UCOUNT], [], [define if we should use program's user counting function instead of system's])
-diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
---- rogue5.4.5x-src.orig/daemons.c	2025-08-02 15:37:21.434631666 +0900
-+++ rogue5.4.5x-src/daemons.c	2025-08-02 15:38:06.663502303 +0900
+diff --git a/daemons.c b/daemons.c
+index 7b2d3d2..be79803 100644
+--- a/daemons.c
++++ b/daemons.c
 @@ -18,7 +18,7 @@
   *	A healing daemon that restors hit points after rest
   */
@@ -3998,7 +4025,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      int lv, ohp;
  
-@@ -50,7 +50,7 @@
+@@ -50,7 +50,7 @@ doctor(void)
   *	Called when it is time to start rolling for wandering monsters
   */
  void
@@ -4007,7 +4034,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      start_daemon(rollwand, 0, BEFORE);
  }
-@@ -61,7 +61,7 @@
+@@ -61,7 +61,7 @@ swander(void)
   */
  
  void
@@ -4016,7 +4043,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
  
      if (++between >= 4)
-@@ -81,7 +81,7 @@
+@@ -81,7 +81,7 @@ rollwand(void)
   *	Release the poor player from his confusion
   */
  void
@@ -4025,7 +4052,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      player.t_flags &= ~ISHUH;
      msg(GET_MSG("daemons.feel_less"), choose_str(GET_MSG("daemons.trippy"), GET_MSG("daemons.confused")));
-@@ -92,7 +92,7 @@
+@@ -92,7 +92,7 @@ unconfuse(void)
   *	Turn off the ability to see invisible
   */
  void
@@ -4034,7 +4061,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      THING *th;
  
-@@ -107,7 +107,7 @@
+@@ -107,7 +107,7 @@ unsee(void)
   *	He gets his sight back
   */
  void
@@ -4043,7 +4070,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      if (on(player, ISBLIND))
      {
-@@ -125,7 +125,7 @@
+@@ -125,7 +125,7 @@ sight(void)
   *	End the hasting
   */
  void
@@ -4052,7 +4079,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      player.t_flags &= ~ISHASTE;
      msg(GET_MSG("daemons.feel_slowing_down"));
-@@ -136,7 +136,7 @@
+@@ -136,7 +136,7 @@ nohaste(void)
   *	Digest the hero's food
   */
  void
@@ -4061,7 +4088,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      int oldfood;
      int orig_hungry = hungry_state;
-@@ -191,7 +191,7 @@
+@@ -191,7 +191,7 @@ stomach(void)
   *	Take the hero down off her acid trip.
   */
  void
@@ -4070,7 +4097,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      THING *tp;
      int seemonst;
-@@ -241,7 +241,7 @@
+@@ -241,7 +241,7 @@ come_down(void)
   *	change the characters for the player
   */
  void
@@ -4079,7 +4106,7 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      THING *tp;
      int seemonst;
-@@ -291,7 +291,7 @@
+@@ -291,7 +291,7 @@ visuals(void)
   *	Land from a levitation potion
   */
  void
@@ -4088,10 +4115,11 @@ diff -Naur rogue5.4.5x-src.orig/daemons.c rogue5.4.5x-src/daemons.c
  {
      player.t_flags &= ~ISLEVIT;
      msg(choose_str(GET_MSG("daemons.hit_ground"),
-diff -Naur rogue5.4.5x-src.orig/extern.h rogue5.4.5x-src/extern.h
---- rogue5.4.5x-src.orig/extern.h	2025-08-02 15:37:21.434631666 +0900
-+++ rogue5.4.5x-src/extern.h	2025-08-02 15:38:06.663502303 +0900
-@@ -92,6 +92,11 @@
+diff --git a/extern.h b/extern.h
+index 028f24b..6022351 100644
+--- a/extern.h
++++ b/extern.h
+@@ -92,6 +92,11 @@ typedef unsigned int uid_t;
  #define HAVE_ALARM 1
  #endif
  
@@ -4103,10 +4131,11 @@ diff -Naur rogue5.4.5x-src.orig/extern.h rogue5.4.5x-src/extern.h
  #ifdef __DJGPP__
  #undef HAVE_GETPWUID /* DJGPP's limited version doesn't even work as documented */
  #endif
-diff -Naur rogue5.4.5x-src.orig/main.c rogue5.4.5x-src/main.c
---- rogue5.4.5x-src.orig/main.c	2025-08-02 15:37:21.438631744 +0900
-+++ rogue5.4.5x-src/main.c	2025-08-02 15:38:06.667502380 +0900
-@@ -230,7 +230,11 @@
+diff --git a/main.c b/main.c
+index 7659492..e00e532 100644
+--- a/main.c
++++ b/main.c
+@@ -230,7 +230,11 @@ main(int argc, char **argv)
  	set_scroll_3();
  
      fflush(stdout);
@@ -4118,7 +4147,7 @@ diff -Naur rogue5.4.5x-src.orig/main.c rogue5.4.5x-src/main.c
  
      initscr();				/* Start up cursor package */
      start_custom_color();
-@@ -361,12 +365,7 @@
+@@ -361,12 +365,7 @@ tstp(int ignored)
      getyx(curscr, y, x);
      mvcur(y, x, oy, ox);
      fflush(stdout);
@@ -4131,10 +4160,11 @@ diff -Naur rogue5.4.5x-src.orig/main.c rogue5.4.5x-src/main.c
  }
  
  /*
-diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
---- rogue5.4.5x-src.orig/mdport.c	2025-08-02 15:37:21.438631744 +0900
-+++ rogue5.4.5x-src/mdport.c	2025-08-02 15:38:06.667502380 +0900
-@@ -370,6 +370,8 @@
+diff --git a/mdport.c b/mdport.c
+index 0e0fe5a..0efecba 100644
+--- a/mdport.c
++++ b/mdport.c
+@@ -370,6 +370,8 @@ md_chmod(const char *filename, int mode)
  void
  md_normaluser(void)
  {
@@ -4143,7 +4173,7 @@ diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
  #ifndef __CYGWIN__
  #if defined(HAVE_GETGID) && defined(HAVE_GETUID)
  	gid_t realgid = getgid();
-@@ -402,6 +404,8 @@
+@@ -402,6 +404,8 @@ md_normaluser(void)
  #endif
      }
  #endif
@@ -4152,7 +4182,28 @@ diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
  }
  
  uid_t
-@@ -643,6 +647,8 @@
+@@ -524,6 +528,8 @@ md_sleep(int s)
+ {
+ #ifdef _WIN32
+     Sleep(s);
++#elif defined(__EMSCRIPTEN__)
++    emscripten_sleep(s * 1000);             
+ #else
+     sleep(s);
+ #endif
+@@ -570,7 +576,11 @@ md_shellescape(void)
+     sh = md_getshell();
+ 
+     while((pid = fork()) < 0)
++#if defined(__EMSCRIPTEN__)
++	emscripten_sleep(1000);
++#else
+ 	sleep(1);
++#endif
+ 
+     if (pid == 0) /* Shell Process */
+     {
+@@ -643,6 +653,8 @@ md_crypt(const char *key, const char *salt)
      return( xcrypt(key,salt) );
  }
  
@@ -4161,7 +4212,7 @@ diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
  char *
  md_getpass(const char *prompt)
  {
-@@ -706,6 +712,14 @@
+@@ -706,6 +718,14 @@ md_getpass(const char *prompt)
  int
  md_erasechar(void)
  {
@@ -4176,7 +4227,7 @@ diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
  #ifdef HAVE_ERASECHAR
      return( erasechar() ); /* process erase character */
  #elif defined(VERASE)
-@@ -713,11 +727,21 @@
+@@ -713,11 +733,21 @@ md_erasechar(void)
  #else
      return(_tty.sg_erase); /* process erase character */
  #endif
@@ -4198,7 +4249,7 @@ diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
  #ifdef HAVE_KILLCHAR
      return( killchar() );
  #elif defined(VKILL)
-@@ -725,6 +749,8 @@
+@@ -725,6 +755,8 @@ md_killchar(void)
  #else
      return(_tty.sg_kill);
  #endif
@@ -4207,10 +4258,11 @@ diff -Naur rogue5.4.5x-src.orig/mdport.c rogue5.4.5x-src/mdport.c
  }
  
  int
-diff -Naur rogue5.4.5x-src.orig/new_level.c rogue5.4.5x-src/new_level.c
---- rogue5.4.5x-src.orig/new_level.c	2017-08-04 10:13:56.000000000 +0900
-+++ rogue5.4.5x-src/new_level.c	2025-08-02 15:38:06.667502380 +0900
-@@ -104,7 +104,7 @@
+diff --git a/new_level.c b/new_level.c
+index a861942..51e402e 100644
+--- a/new_level.c
++++ b/new_level.c
+@@ -104,7 +104,7 @@ new_level(void)
      if (on(player, SEEMONST))
  	turn_see(FALSE);
      if (on(player, ISHALU))
@@ -4219,10 +4271,11 @@ diff -Naur rogue5.4.5x-src.orig/new_level.c rogue5.4.5x-src/new_level.c
  }
  
  /*
-diff -Naur rogue5.4.5x-src.orig/potions.c rogue5.4.5x-src/potions.c
---- rogue5.4.5x-src.orig/potions.c	2025-08-02 15:37:21.442631820 +0900
-+++ rogue5.4.5x-src/potions.c	2025-08-02 15:38:06.667502380 +0900
-@@ -97,13 +97,13 @@
+diff --git a/potions.c b/potions.c
+index 15b3429..1f3052a 100644
+--- a/potions.c
++++ b/potions.c
+@@ -97,13 +97,13 @@ quaff(void)
  	    {
  		chg_str(-(rnd(3) + 1));
  		msg(GET_MSG("potions.very_sick"));
@@ -4238,7 +4291,7 @@ diff -Naur rogue5.4.5x-src.orig/potions.c rogue5.4.5x-src/potions.c
  	    msg(GET_MSG("potions.feel_better"));
  	when P_STRENGTH:
  	    pot_info[P_STRENGTH].oi_know = TRUE;
-@@ -177,7 +177,7 @@
+@@ -177,7 +177,7 @@ quaff(void)
  	    do_pot(P_SEEINVIS, FALSE);
  	    if (!show)
  		invis_on();
@@ -4247,7 +4300,7 @@ diff -Naur rogue5.4.5x-src.orig/potions.c rogue5.4.5x-src/potions.c
  	when P_RAISE:
  	    pot_info[P_RAISE].oi_know = TRUE;
  	    msg(GET_MSG("potions.feel_skillful"));
-@@ -190,8 +190,8 @@
+@@ -190,8 +190,8 @@ quaff(void)
  		    ++max_hp;
  		pstats.s_hpt = ++max_hp;
  	    }
@@ -4258,10 +4311,11 @@ diff -Naur rogue5.4.5x-src.orig/potions.c rogue5.4.5x-src/potions.c
  	    msg(GET_MSG("potions.feel_much_better"));
  	when P_HASTE:
  	    pot_info[P_HASTE].oi_know = TRUE;
-diff -Naur rogue5.4.5x-src.orig/rip.c rogue5.4.5x-src/rip.c
---- rogue5.4.5x-src.orig/rip.c	2025-08-02 15:37:21.446631898 +0900
-+++ rogue5.4.5x-src/rip.c	2025-08-02 15:38:06.667502380 +0900
-@@ -64,6 +64,7 @@
+diff --git a/rip.c b/rip.c
+index c26906d..4e605ba 100644
+--- a/rip.c
++++ b/rip.c
+@@ -64,6 +64,7 @@ score(int amount, int flags, int monst)
  	"rip.killed_with_amulet",
      };
      char buf[160], buf2[160];
@@ -4269,7 +4323,7 @@ diff -Naur rogue5.4.5x-src.orig/rip.c rogue5.4.5x-src/rip.c
  
      start_score();
  
-@@ -109,10 +110,12 @@
+@@ -109,10 +110,12 @@ score(int amount, int flags, int monst)
  
  #ifdef MASTER
      if (wizard)
@@ -4282,7 +4336,7 @@ diff -Naur rogue5.4.5x-src.orig/rip.c rogue5.4.5x-src/rip.c
  #endif
      rd_score(top_ten);
      /*
-@@ -149,8 +152,8 @@
+@@ -149,8 +152,8 @@ score(int amount, int flags, int monst)
  	    }
  	    scp->sc_score = amount;
  	    if (rname == TRUE && pstats.s_lvl > 1) {
@@ -4293,7 +4347,7 @@ diff -Naur rogue5.4.5x-src.orig/rip.c rogue5.4.5x-src/rip.c
  	    }
  	    else
  		strncpy(scp->sc_name, whoami, MAXSTR);
-@@ -258,7 +261,7 @@
+@@ -258,7 +261,7 @@ void writelog(int amount, int flags, int monst)
  	return;
      }
  #endif
@@ -4302,10 +4356,11 @@ diff -Naur rogue5.4.5x-src.orig/rip.c rogue5.4.5x-src/rip.c
  	    pstats.s_lvl);
      if (flags == 0) /* dead */
      {
-diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
---- rogue5.4.5x-src.orig/rogue.h	2025-08-02 15:37:21.446631898 +0900
-+++ rogue5.4.5x-src/rogue.h	2025-08-02 15:38:06.667502380 +0900
-@@ -466,7 +466,7 @@
+diff --git a/rogue.h b/rogue.h
+index 830cea5..0de0e4f 100644
+--- a/rogue.h
++++ b/rogue.h
+@@ -466,7 +466,7 @@ struct monster {
  
  struct delayed_action {
      int d_type;
@@ -4314,7 +4369,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
      int d_arg;
      int d_time;
  };
-@@ -563,7 +563,7 @@
+@@ -563,7 +563,7 @@ void	chg_str(int amt);
  void	check_level(void);
  const char *choose_str(const char *ts, const char *ns);
  void	conn(int r1, int r2);
@@ -4323,7 +4378,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  void	command(void);
  void	create_obj(void);
  void	current(const THING *cur, const char *how, const char *where);
-@@ -588,7 +588,7 @@
+@@ -588,7 +588,7 @@ void	do_rooms(void);
  void	do_run(int ch);
  void	do_zap(void);
  void	doadd(const char *fmt, va_list args);
@@ -4332,7 +4387,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  void	door(struct room *rm, const coord *cp);
  void	door_open(const struct room *rp);
  void	drain(void);
-@@ -598,7 +598,7 @@
+@@ -598,7 +598,7 @@ int 	dropcheck(const THING *obj);
  void	eat(void);
  int     encclearerr();
  int     encerror();
@@ -4341,7 +4396,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  size_t  encread(char *start, size_t size, FILE *inf);
  size_t	encwrite(const char *start, size_t size, FILE *outf);
  void    end_line(void);
-@@ -657,7 +657,7 @@
+@@ -657,7 +657,7 @@ int     is_symlink(const char *sp);
  void	kill_daemon(void (*func)());
  void	killed(THING *tp, int pr);
  const char *killname(int monst, int doart);
@@ -4350,7 +4405,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  void    leave(int);
  THING   *leave_pack(THING *obj, int newobj, int all);
  int 	levit_check(void);
-@@ -674,7 +674,7 @@
+@@ -674,7 +674,7 @@ THING   *new_item(void);
  void	new_level(void);
  void	new_monster(THING *tp, int type, const coord *cp);
  THING   *new_thing(void);
@@ -4359,7 +4414,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  const char *nothing(int type);
  const char *nullstr(const THING *ignored);
  const char *num(int n1, int n2, int type);
-@@ -722,11 +722,11 @@
+@@ -722,11 +722,11 @@ int	rnd_thing(void);
  coord	rndmove(const THING *who);
  int	roll(int number, int sides);
  int	roll_em(const THING *thatt, THING *thdef, const THING *weap, int hurl);
@@ -4373,7 +4428,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  void	runto(const coord *runner);
  void	rust_armor(THING *arm);
  int	save(int which);
-@@ -746,17 +746,17 @@
+@@ -746,17 +746,17 @@ void	shell(void);
  int 	show_floor(void);
  void	show_map(void);
  void	show_win(const char *message);
@@ -4394,7 +4449,7 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  int	swing(int at_lvl, int op_arm, int wplus);
  void	take_off(void);
  void	teleport(void);
-@@ -771,12 +771,12 @@
+@@ -771,12 +771,12 @@ void    turn_see_off(void);
  void	turnref(void);
  const char *type_name(int type);
  void	u_level(void);
@@ -4410,10 +4465,11 @@ diff -Naur rogue5.4.5x-src.orig/rogue.h rogue5.4.5x-src/rogue.h
  char	*vowelstr(const char *str);
  void	wait_for(WINDOW *win, int ch);
  const THING *wake_monster(int y, int x);
-diff -Naur rogue5.4.5x-src.orig/things.c rogue5.4.5x-src/things.c
---- rogue5.4.5x-src.orig/things.c	2025-08-02 15:37:21.450631974 +0900
-+++ rogue5.4.5x-src/things.c	2025-08-02 15:38:06.667502380 +0900
-@@ -222,7 +222,7 @@
+diff --git a/things.c b/things.c
+index 2c4e24a..bebeb3f 100644
+--- a/things.c
++++ b/things.c
+@@ -222,7 +222,7 @@ dropcheck(const THING *obj)
  		chg_str(-obj->o_arm);
  		break;
  	    case R_SEEINVIS:

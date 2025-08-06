@@ -1,7 +1,8 @@
-diff -Naur rogue5.4.5x-src.orig/command.c rogue5.4.5x-src/command.c
---- rogue5.4.5x-src.orig/command.c	2025-08-02 14:48:07.785778689 +0900
-+++ rogue5.4.5x-src/command.c	2025-08-02 14:49:29.627353593 +0900
-@@ -221,6 +221,7 @@
+diff --git a/command.c b/command.c
+index f058879..1a94063 100644
+--- a/command.c
++++ b/command.c
+@@ -219,6 +219,7 @@ command(void)
  		last_pick = NULL;
  	    }
  over:

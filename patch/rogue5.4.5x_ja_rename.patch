@@ -1,7 +1,8 @@
-diff -Naur rogue5.4.5x-src.orig/messages.c rogue5.4.5x-src/messages.c
---- rogue5.4.5x-src.orig/messages.c	2025-08-02 14:48:04.753720343 +0900
-+++ rogue5.4.5x-src/messages.c	2025-08-02 14:48:25.222114222 +0900
-@@ -993,7 +993,7 @@
+diff --git a/messages.c b/messages.c
+index 5f86680..43782f6 100644
+--- a/messages.c
++++ b/messages.c
+@@ -993,7 +993,7 @@ static const message_entry message_table_ja[] = {
  
      /* extern.c */
      { "extern.flame", "炎" },
@@ -10,7 +11,7 @@ diff -Naur rogue5.4.5x-src.orig/messages.c rogue5.4.5x-src/messages.c
      { "extern.inv_style_overwrite", "上書き(O)" },
      { "extern.inv_style_slow", "低速(S)" },
      { "extern.inv_style_clear", "クリア(C)" },
-@@ -1015,13 +1015,13 @@
+@@ -1015,13 +1015,13 @@ static const message_entry message_table_ja[] = {
      { "extern.monster_hobgoblin", "ホブゴブリン" },
      { "extern.monster_ice_monster", "氷の怪物" },
      { "extern.monster_jabberwock", "ジャバウォック" },
@@ -26,7 +27,7 @@ diff -Naur rogue5.4.5x-src.orig/messages.c rogue5.4.5x-src/messages.c
      { "extern.monster_rattlesnake", "がらがらへび" },
      { "extern.monster_snake", "へび" },
      { "extern.monster_slime", "スライム" },
-@@ -1034,13 +1034,13 @@
+@@ -1034,13 +1034,13 @@ static const message_entry message_table_ja[] = {
      { "extern.monster_yeti", "イエティ" },
      { "extern.monster_zombie", "ゾンビ" },
      { "extern.arm_leather_armor", "革のよろい" },
@@ -46,7 +47,7 @@ diff -Naur rogue5.4.5x-src.orig/messages.c rogue5.4.5x-src/messages.c
      { "extern.pot_confusion", "頭が混乱する" },
      { "extern.pot_hallucination", "幻覚をおこす" },
      { "extern.pot_poison", "毒の" },
-@@ -1067,7 +1067,7 @@
+@@ -1067,7 +1067,7 @@ static const message_entry message_table_ja[] = {
      { "extern.ring_dexterity", "機敏になる" },
      { "extern.ring_increase_damage", "ダメージを増やす" },
      { "extern.ring_regeneration", "再生の" },
@@ -55,7 +56,7 @@ diff -Naur rogue5.4.5x-src.orig/messages.c rogue5.4.5x-src/messages.c
      { "extern.ring_teleportation", "テレポートする" },
      { "extern.ring_stealth", "身を隠す" },
      { "extern.ring_maintain_armor", "よろいが丈夫になる" },
-@@ -1092,15 +1092,15 @@
+@@ -1092,15 +1092,15 @@ static const message_entry message_table_ja[] = {
      { "extern.scr2_identify", "持ちものの種類がわかる" },
      { "extern.scr2_blank_paper", "何も書かれていない" },
      { "extern.scr2_vorpalize_weapon", "武器の切れ味を強化する" },
